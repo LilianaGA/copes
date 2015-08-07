@@ -46,7 +46,7 @@ class ContadorController extends BaseController
 	                    		'FA.Seccion_Alumno',
 	                    		'P.Mensualidad')
 	                    ->join('Familia_Alumnos as FA', 'FA.id', '=', 'P.Cedula_Alumno')
-	                    ->whereBetween('P.Fecha_Pago', array('01-' . $now->format("m") . '-' . $now->format("Y"), $now->format('d-m-Y')))
+	                    ->whereBetween('P.Fecha_Pago', array($now->format("m") . '-01-' . $now->format("Y"), $now->format('m-d-Y')))
 	                    ->orderBy('FA.Nombre_Alumno' , 'asc' )
                         ->get();
             $data['Familia'] = DB::table('Codigo_Familia')
@@ -72,7 +72,7 @@ class ContadorController extends BaseController
         if ($this->validateContador() == true) {
         	$now = new DateTime();
         	$data['MontosActuales'] = DB::table('Pagos')
-        				->whereBetween('Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('d-m-Y')))
+        				->whereBetween('Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('m-d-Y')))
                         ->sum('Monto_Recibo');
             $data['MontosMensuales'] = DB::select(
                     DB::raw('Select
@@ -81,7 +81,7 @@ class ContadorController extends BaseController
 							From
 								"Pagos"
 							Where
-								"Fecha_Pago" between \'01-01-' . $now->format("Y") . '\' and \'31-12-' . $now->format('Y') . '\'
+								"Fecha_Pago" between \'01-01-' . $now->format("Y") . '\' and \'12-31-' . $now->format('Y') . '\'
 							Group by "Mensualidad"
 							Order by cast("Mensualidad" as int) asc'));
             $data['MontosAlDia'] = DB::table('Familia_Alumnos as FA')
@@ -93,7 +93,7 @@ class ContadorController extends BaseController
 	                    		'P.Mensualidad')
 	                    ->join('Pagos as P', 'P.Cedula_Alumno', '=', 'FA.id')
 	                    ->join('Saldos as S', 'S.id_Pago', '=', 'P.id')
-	                    ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('d-m-Y')))
+	                    ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('m-d-Y')))
 	                    ->where('P.Recargo', "=", 0)
 	                    ->where('S.Diferencia', "=", 0)
 	                    ->get();
@@ -108,7 +108,7 @@ class ContadorController extends BaseController
 							from "Codigo_Familia" as CF
 							inner JOIN "Pagos" as P on P."Codigo_Familia" = CF."Codigo_Familia"
 							inner JOIN "Saldos" as S on S."id_Pago" = P.id
-							where (P."Recargo" > 0 or S."Diferencia" > 0 ) and P."Fecha_Pago" between \'01-01-' . $now->format("Y") . '\' and \'' . $now->format('d-m-Y') . '\'
+							where (P."Recargo" > 0 or S."Diferencia" > 0 ) and P."Fecha_Pago" between \'01-01-' . $now->format("Y") . '\' and \'' . $now->format('m-d-Y') . '\'
 							group by CF."Apellido1", CF."Apellido2"
 							Order by CF."Apellido1" asc, CF."Apellido2" asc'));
             $data['Familia'] = DB::table('Codigo_Familia')
@@ -373,7 +373,7 @@ class ContadorController extends BaseController
 											from "Pagos" P, "Saldos" S, "Familia_Alumnos" FA
 											where P."Codigo_Familia" = \'' . $pagos->Codigo_Familia . '\'
 											and S.id = P.id
-												and P."Fecha_Pago" between \'01-01-' . ($now->format("y") + 2000) .'\' and \''. $now->format('d-m') . '-' . ($now->format("y") + 2000) . '\'
+												and P."Fecha_Pago" between \'01-01-' . ($now->format("y") + 2000) .'\' and \''. $now->format('m-d') . '-' . ($now->format("y") + 2000) . '\'
 											and P."Cedula_Alumno" = FA.id
 											group by FA."Nombre_Alumno", FA."Apellido1_Alumno",FA."Apellido2_Alumno"'));
 					try {
@@ -479,7 +479,7 @@ class ContadorController extends BaseController
 	                    		'FA.Seccion_Alumno',
 	                    		'P.Mensualidad')
                         ->where('FA.Cedula_Alumno', '=', $Code)
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('d-m-Y')))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('m-d-Y')))
                         ->orderBy('P.Mensualidad' , 'asc' )
                         ->get(); 
         return Response::json($data);
