@@ -65,6 +65,20 @@ return array(
 
 		'pgsql' => array(
 			'driver'   => 'pgsql',
+			'host'     => 'ec2-54-204-0-120.compute-1.amazonaws.com',
+			//'host'     => 'localhost',
+			'database' => 'df555n64ii6jao',
+			//'database' => 'copes2',
+			'username' => 'iuabsrgtdzvruq',
+			'password' => '7IbpDgBH5-HcMfsvcaIH0bygXF',
+			//'password' => '12345',
+			'charset'  => 'utf8',
+			'prefix'   => '',
+			'schema'   => 'public',
+		),
+
+		/*'pgsql' => array(
+			'driver'   => 'pgsql',
 			'host'     => 'copes2.cry4jtvyfbyo.us-west-2.rds.amazonaws.com',
 			//'host'     => 'localhost',
 			'database' => 'COPES2',
@@ -75,7 +89,7 @@ return array(
 			'charset'  => 'utf8',
 			'prefix'   => '',
 			'schema'   => 'public',
-		),
+		),*/
 
 		'sqlsrv' => array(
 			'driver'   => 'sqlsrv',
