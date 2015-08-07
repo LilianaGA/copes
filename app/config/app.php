@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://copes.herokuapp.com/',
+	'url' => 'https://copes.herokuapp.com/',
 
 	/*
 	|--------------------------------------------------------------------------
