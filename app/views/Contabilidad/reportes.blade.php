@@ -2,7 +2,7 @@
 @section('cabecera') 
 @parent 
 <link href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css" rel="stylesheet" media="screen">
-{{HTML::style('css/contabilidad/reportes.css');}}  @stop @section('cuerpo') @parent
+{{HTML::style('css/Contabilidad/reportes.css');}}  @stop @section('cuerpo') @parent
 
 	
 <div class="container">

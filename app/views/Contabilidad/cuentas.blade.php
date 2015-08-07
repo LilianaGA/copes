@@ -1,4 +1,4 @@
-@extends('layouts.base') @section('cabecera') @parent {{HTML::style('css/contabilidad/cuentas.css');}}  @stop @section('cuerpo') @parent
+@extends('layouts.base') @section('cabecera') @parent {{HTML::style('css/Contabilidad/cuentas.css');}}  @stop @section('cuerpo') @parent
 
 	
 <div class="container">
