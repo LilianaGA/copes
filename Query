@@ -1,0 +1,1 @@
+select ha.id from "Hora_Atencion" as ha, "Usuarios" as U where HA."Codigo_Profesor" = U.id and U."Cedula" = '114610267'
