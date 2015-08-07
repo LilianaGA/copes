@@ -28,7 +28,7 @@ $( "#select-month" ).change(function() {
 function resultDate()
 {
 	var currentOCh		= $("#Recargo1").val()
-	var lastDayPay		= $("#Fecha_Pago1").val();
+	var lastDayPay		= $("#Fecha_Pago").val();
   	var lastDayPay		= new Date(lastDayPay.slice(3, 5) + "/" + lastDayPay.slice(0, 2) + "/" + lastDayPay.slice(6, 10));
 	var month 			= $('#select-month option:selected').attr('value');
 	var today 			= new Date();
@@ -38,7 +38,7 @@ function resultDate()
 	var dayOfPay		= $("#Fecha_Pago").val();
 	var currentMonth	= dayOfPay.slice(3, 5);
 	var dayOfPay		= new Date(dayOfPay.slice(3, 5) + "/" + dayOfPay.slice(0, 2) + "/" + dayOfPay.slice(6, 10));
-	var Diferencia 			= $("#Diferencia").val();
+	var Diferencia 		= $("#Diferencia").val();
 	if ( currentOCh == Diferencia) {
 		$("#Recargo").val(0);
 		var Descripcion = $("#Descripcion").val();
@@ -57,12 +57,17 @@ function resultDate()
 		if ( nDayOfPay > nLimitDay) {
 			if (nDayOfPay < nLastDay){
 				if (Number(currentMonth) >= Number(month)) {
-					var Recargo = parseInt($("#Monto").val()) * 0.15;
-					var RecargoFinal = parseInt(RecargoOriginal) + parseInt(Recargo);
-					$("#Recargo").val(RecargoFinal);
-					if (Number(lastDayPay) < Number(firstDay)) {
+					var calculoAnterior = parseInt($("#Monto").val()) - parseInt($("#MontoPagado").val());
+					if (currentOCh = calculoAnterior) {
 						$("#Recargo").val(currentOCh);
-					};
+					}else{
+						var Recargo = parseInt($("#Monto").val()) * 0.15;
+						var RecargoFinal = parseInt(RecargoOriginal) + parseInt(Recargo);
+						$("#Recargo").val(RecargoFinal);
+						if (Number(lastDayPay) < Number(firstDay)) {
+							$("#Recargo").val(currentOCh);
+						};
+					}
 				}else{
 					$("#Recargo").val(RecargoOriginal);
 				}
@@ -70,7 +75,18 @@ function resultDate()
 				$("#Recargo").val(RecargoOriginal);
 			}
 		}else{
-			$("#Recargo").val(RecargoOriginal);
+			var aux = $("#Recargo").val();
+			if (currentOCh == aux) {
+				$("#Recargo").val(0);
+				$("#Diferencia").val(0);
+				var Descripcion = $("#Descripcion").val();
+				if (!Descripcion.includes(', monto pendiente corresponde al recargo.')) {
+					Descripcion += ', monto pendiente corresponde al recargo.';
+				};
+				$("#Descripcion").val(Descripcion);
+			}else{				
+				$("#Recargo").val(RecargoOriginal);
+			}
 		}
 	}
 };

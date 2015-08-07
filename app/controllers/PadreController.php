@@ -35,7 +35,7 @@ class PadreController extends BaseController
 
     public function showSaldos(){
         if ($this->validatePadre() == true) {
-        	$now = new DateTime();
+            $now = new DateTime();
             $data['Saldos'] = DB::table('Pagos as P')
                         ->join('Familia_Alumnos as FA', 'FA.id', '=', 'P.Cedula_Alumno')
                         ->join('Saldos as S', 'S.id_Pago', '=', 'P.id')
@@ -67,11 +67,11 @@ class PadreController extends BaseController
                         ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('M/d/y')))
                         ->sum('S.Diferencia');  
             $data['Permiso']  = $this->getRoles();
-    		return View::make('padre.saldos', $data);
+            return View::make('padre.saldos', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
-	}
+    }
 
     public function showCancelaCitas()
     {
@@ -132,7 +132,7 @@ class PadreController extends BaseController
         }else{
             return Redirect::route('logoutFromRol'); 
         }
-	}
+    }
     
     public function showCertificados(){
         if ($this->validatePadre() == true) {
@@ -141,7 +141,7 @@ class PadreController extends BaseController
         }else{
             return Redirect::route('logoutFromRol'); 
         }
-	}
+    }
 
     public function showSubjects($Cedula_Alumno){
         if ($this->validatePadre() == true) {
@@ -185,7 +185,6 @@ class PadreController extends BaseController
                 ->join('Leccion_Hora as LH','LH.Numero','=', 'HA.Leccion_Hora')
                 ->get();  
 
-                
                 foreach($data as $key)
                 {
                     $array = array();
@@ -211,6 +210,7 @@ class PadreController extends BaseController
                     }
                     $newData['Days'] = $json;
                     
+                    //var_dump($newData); die;
                     $date = new DateTime();
                     $firstDayOfYear = $date->format('Y-01-01');
                     $lastDay = $date->format('Y-m-t');
@@ -266,13 +266,13 @@ class PadreController extends BaseController
         else {//lunes cita para miercoles
             $dayToStart =  ($numberOfDay) + ($indexByDayNeeded  - $indexByDay);
         }
-        $stringDate = $dayToStart .  "-"  . $numberOfMonth . "-" .  $year;
+        $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;
     
         if ($dayToStart   <= $numberOfDaysByMonth) {
             $daysForThisMonth = array($stringDate);
             while ($dayToStart  <= $numberOfDaysByMonth) {
                 $dayToStart += 7;//28-05-2015 
-                $stringDate = $dayToStart .  "-"  . $numberOfMonth . "-" .  $year;
+                $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;
                 if ($dayToStart  <= $numberOfDaysByMonth) { 
                     array_push($daysForThisMonth,$stringDate);
                 }
@@ -344,10 +344,11 @@ class PadreController extends BaseController
                 ->where('FA.Cedula_Alumno', '=',   $cedulaA )
                 ->get(); 
 
-        $date=date_create($fecha);
-        $fecha = date_format($date,"d - M - y");
 
-        $data = array( 'titulo'=> 'Confirmación de Cita',  'email' => $select[0]->Correo, 'name'=> $select[0]->Nombre . ' ' . $select[0]->Apellido1 . ' ' . $select[0]->Apellido2, 'dia'=> $fecha, 'hora'=> $Hora_Atencion[0]->Hora, 'detalle' => 'Se confirma que tiene una cita de atención solicitado por Padre, Madre o Encargado del alumno: ' . $Alumno[0]->Nombre_Alumno . ' ' . $Alumno[0]->Apellido1_Alumno . ' ' . $Alumno[0]->Apellido2_Alumno);
+        $mons = array('01' => "Ene", '02' => "Feb", '03' => "Mar", '04' => "Abr", '05' => "May", '06' => "Jun", '07' => "Jul", '08' => "Ago", '09' => "Sep", '10' => "Oct", '11' => "Nov", '12' => "Dec");
+        $fechaAux = substr($fecha,3,2) . "/" . $mons[substr($fecha,0,2)] . "/" . substr($fecha,6,6);
+
+        $data = array( 'titulo'=> 'Confirmación de Cita',  'email' => $select[0]->Correo, 'name'=> $select[0]->Nombre . ' ' . $select[0]->Apellido1 . ' ' . $select[0]->Apellido2, 'dia'=> $fechaAux, 'hora'=> $Hora_Atencion[0]->Hora, 'detalle' => 'Se confirma que tiene una cita de atención solicitado por Padre, Madre o Encargado del alumno: ' . $Alumno[0]->Nombre_Alumno . ' ' . $Alumno[0]->Apellido1_Alumno . ' ' . $Alumno[0]->Apellido2_Alumno);
         Mail::queue('Email.citas', $data, function($message) use ($data){
             $message->to($data['email'], $data['name'])->subject('Confirmación de cita');
         }); 

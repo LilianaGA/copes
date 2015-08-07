@@ -206,7 +206,8 @@ class ContadorController extends BaseController
 			$pagos->Numero_Recibo_Banco = Input::get('Numero_Recibo_Banco');
 			$pagos->Monto_Recibo = Input::get('MontoPagado');
 			$pagos->Recargo = Input::get('Recargo');
-			$pagos->Fecha_Pago = Input::get('Fecha_Pago');
+			$fechaAux = substr(Input::get('Fecha_Pago'),3,2) . "/" . substr(Input::get('Fecha_Pago'),0,2) . "/" . substr(Input::get('Fecha_Pago'),6,6);
+			$pagos->Fecha_Pago = $fechaAux;
 			$pagos->Mensualidad = Input::get('Mensualidad');
 			$pagos->save();
 			$saldos = Saldos::all();
@@ -262,7 +263,8 @@ class ContadorController extends BaseController
 					$pagos->Monto_Recibo = Input::get('MontoPagado');
 					$pagos->Mensualidad = Input::get('searchMes');
 					$pagos->Recargo = Input::get('Recargo');
-					$pagos->Fecha_Pago = Input::get('Fecha_Pago');
+					$fechaAux = substr(Input::get('Fecha_Pago'),3,2) . "/" . substr(Input::get('Fecha_Pago'),0,2) . "/" . substr(Input::get('Fecha_Pago'),6,6);
+					$pagos->Fecha_Pago = $fechaAux;
 					$pagos->save();
 		        	$saldos = new Saldos();
 		        	$saldos->Codigo_Familia = $usr->Codigo_Familia;
@@ -458,7 +460,7 @@ class ContadorController extends BaseController
 	                    		'FA.Seccion_Alumno',
 	                    		'P.Mensualidad')
                         ->where('P.Mensualidad', '=', $Code)
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), '30-11-' . $now->format("Y")))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), '11-30-' . $now->format("Y")))
                         ->orderBy('P.id' , 'asc' )
                         ->get(); 
         return Response::json($data);

@@ -1,5 +1,5 @@
 @extends('layouts.base') @section('cabecera') @parent {{HTML::style('css/administrativo/usuario.css');}}
-{{HTML::style('css/contabilidad/reportes.css');}}
+{{HTML::style('css/Contabilidad/reportes.css');}}
  @stop @section('cuerpo')
 @parent
 
