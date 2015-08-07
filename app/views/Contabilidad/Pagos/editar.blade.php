@@ -1,5 +1,5 @@
 @extends('layouts.base') @section('cabecera') @parent 
-{{HTML::style('css/contabilidad/newPago.css');}} 
+{{HTML::style('css/Contabilidad/newPago.css');}} 
 @stop @section('cuerpo')
 @parent
 @foreach($Pagos as $usr)
