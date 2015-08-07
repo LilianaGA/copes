@@ -1,5 +1,3 @@
-
-
 <?php
 
 class PadreController extends BaseController
@@ -51,22 +49,22 @@ class PadreController extends BaseController
                                  'P.Recargo',
                                  'S.Diferencia')
                         ->where('P.Codigo_Familia', '=',  Auth::user()->Codigo_Familia )
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('d/M/y')))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('M/d/y')))
                         ->get(); 
             $data['MontoRecibo'] = DB::table('Pagos as P')
                         ->join('Saldos as S', 'S.id_Pago', '=', 'P.id')
                         ->where('P.Codigo_Familia', '=', Auth::user()->Codigo_Familia )
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('d/M/y')))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('M/d/y')))
                         ->sum('P.Monto_Recibo');
             $data['Recargo'] = DB::table('Pagos as P')
                         ->join('Saldos as S', 'S.id_Pago', '=', 'P.id')
                         ->where('P.Codigo_Familia', '=',   Auth::user()->Codigo_Familia )
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('d/M/y')))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('M/d/y')))
                         ->sum('P.Recargo');            
             $data['Diferencia'] = DB::table('Pagos as P')
                         ->join('Saldos as S', 'S.id_Pago', '=', 'P.id')
                         ->where('P.Codigo_Familia', '=',    Auth::user()->Codigo_Familia )
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('d/M/y')))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("y"), $now->format('M/d/y')))
                         ->sum('S.Diferencia');  
             $data['Permiso']  = $this->getRoles();
     		return View::make('padre.saldos', $data);
