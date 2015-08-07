@@ -134,7 +134,7 @@ class ContadorController extends BaseController
 	                    		'Seccion_Alumno')
 	                    ->get();
 	        $data['Permiso']  = $this->getRoles();
-		  	return View::make('Contabilidad.pagos.nuevo', $data);
+		  	return View::make('Contabilidad.Pagos.nuevo', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -163,7 +163,7 @@ class ContadorController extends BaseController
 	                    ->where('P.id', "=", $id)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-		  	return View::make('Contabilidad.pagos.mostrar', $data);
+		  	return View::make('Contabilidad.Pagos.mostrar', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -192,7 +192,7 @@ class ContadorController extends BaseController
 	                    ->where('P.id', "=", $id)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-		  	return View::make('Contabilidad.pagos.editar', $data);
+		  	return View::make('Contabilidad.Pagos.editar', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }

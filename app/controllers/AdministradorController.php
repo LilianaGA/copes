@@ -317,7 +317,7 @@ class AdministradorController extends BaseController
                 ->where('Estado', "=", "T")
                 ->orderBy('Codigo_Familia', 'asc')
                 ->get();
-			return View::make('Administrativo.usuarios.nuevo', $data);
+			return View::make('Administrativo.Usuarios.nuevo', $data);
 		}
 	}
 
@@ -344,7 +344,7 @@ class AdministradorController extends BaseController
             	$codigo = 'FAM' . ($codigo + 1);
             }
             $data['Codigo'] = $codigo;
-			return View::make('Administrativo.familia.nuevo', $data);
+			return View::make('Administrativo.Familia.nuevo', $data);
 		}
 	}
 
@@ -358,7 +358,7 @@ class AdministradorController extends BaseController
                     ->select('FA.id', 'FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno')
                     ->orderBy('FA.Cedula_Alumno', 'asc')
                     ->get();
-			return View::make('Administrativo.citas.nuevo', $data);
+			return View::make('Administrativo.Citas.nuevo', $data);
 		}
 	}
 
@@ -500,7 +500,7 @@ class AdministradorController extends BaseController
 	                    ->where('UT.Cedula', '=', $data['Usuarios'][0]->Cedula)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-			return View::make('Administrativo.usuarios.mostrar', $data);
+			return View::make('Administrativo.Usuarios.mostrar', $data);
 		}
 	}
 
@@ -521,7 +521,7 @@ class AdministradorController extends BaseController
 	                    ->where('FA.Codigo_Familia', '=', $id)
 	                    ->get();
 	        $data['Permiso']  = $this->getRoles();            	
-			return View::make('Administrativo.familia.mostrar', $data);
+			return View::make('Administrativo.Familia.mostrar', $data);
 		}
 	}
 
@@ -542,7 +542,7 @@ class AdministradorController extends BaseController
 	                    ->where('UT.Cedula', '=', $data['Usuarios'][0]->Cedula)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-			return View::make('Administrativo.usuarios.edit', $data);
+			return View::make('Administrativo.Usuarios.edit', $data);
 		}
 	}
 
@@ -555,7 +555,7 @@ class AdministradorController extends BaseController
 	                    ->where('FA.id', '=', $id)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-			return View::make('Administrativo.familia.editar', $data);
+			return View::make('Administrativo.Familia.editar', $data);
 		}
 	}
 
@@ -792,7 +792,7 @@ class AdministradorController extends BaseController
 	                    ->select('FA.id', 'FA.Codigo_Familia', 'FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno', 'FA.Seccion_Alumno', 'FA.Nivel_Alumno', 'FA.Monto_Mensual')
 	                    ->where('FA.id', '=', $id)
 	                    ->get();
-			return View::make('Administrativo.estudiante.editar', $data);
+			return View::make('Administrativo.Estudiante.editar', $data);
 		}
 	}
 
