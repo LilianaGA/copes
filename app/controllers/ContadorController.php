@@ -117,7 +117,7 @@ class ContadorController extends BaseController
 	                    		'Apellido2')
 	                    ->get();
 	        $data['Permiso']  = $this->getRoles();
-            return View::make('contabilidad.reportes', $data);
+            return View::make('Contabilidad.reportes', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -134,7 +134,7 @@ class ContadorController extends BaseController
 	                    		'Seccion_Alumno')
 	                    ->get();
 	        $data['Permiso']  = $this->getRoles();
-		  	return View::make('contabilidad.pagos.nuevo', $data);
+		  	return View::make('Contabilidad.pagos.nuevo', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -163,7 +163,7 @@ class ContadorController extends BaseController
 	                    ->where('P.id', "=", $id)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-		  	return View::make('contabilidad.pagos.mostrar', $data);
+		  	return View::make('Contabilidad.pagos.mostrar', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -192,7 +192,7 @@ class ContadorController extends BaseController
 	                    ->where('P.id', "=", $id)
 	                    ->get();
             $data['Permiso']  = $this->getRoles();
-		  	return View::make('contabilidad.pagos.editar', $data);
+		  	return View::make('Contabilidad.pagos.editar', $data);
         }else{
             return Redirect::route('logoutFromRol'); 
         }
@@ -314,7 +314,7 @@ class ContadorController extends BaseController
             return Redirect::route('logoutFromRol'); 
         }else{
         	$data['Permiso']  = $this->getRoles();
-			return View::make('contabilidad.cuentas', $data);
+			return View::make('Contabilidad.cuentas', $data);
 		}
 	}
 
