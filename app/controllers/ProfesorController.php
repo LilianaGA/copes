@@ -87,36 +87,41 @@ class ProfesorController extends BaseController
         if ($this->validateProfesor() == false) {
             return Redirect::route('home');
         }else{
-            $cita = Citas::find($id);
-            $Hora_Atencion = DB::table('Hora_Atencion as HA')
-                    ->select('HA.Dia', 'LH.Hora', 'UC.Correo',
-                     'U.Nombre',
-                     'U.Apellido1',
-                     'U.Apellido2')
-                    ->where('HA.id', '=',   $cita->id_Hora_Atencion )
-                    ->join('Usuarios AS U','U.Cedula','=','HA.Codigo_Profesor')
-                    ->join('Leccion_Hora AS LH','LH.id','=','HA.Leccion_Hora')
-                    ->join('Usuarios_Correos AS UC','UC.Cedula','=','U.Cedula')
-                    ->get();
+            if ($estado == 'Pendiente') {
+                $data['Respuesta'] = 'Successfull';
+                return $data['Respuesta'];
+            }else{
+                $cita = Citas::find($id);
+                $Hora_Atencion = DB::table('Hora_Atencion as HA')
+                        ->select('HA.Dia', 'LH.Hora', 'UC.Correo',
+                         'U.Nombre',
+                         'U.Apellido1',
+                         'U.Apellido2')
+                        ->where('HA.id', '=',   $cita->id_Hora_Atencion )
+                        ->join('Usuarios AS U','U.Cedula','=','HA.Codigo_Profesor')
+                        ->join('Leccion_Hora AS LH','LH.id','=','HA.Leccion_Hora')
+                        ->join('Usuarios_Correos AS UC','UC.Cedula','=','U.Cedula')
+                        ->get();
 
-            $Alumno = DB::table('Familia_Alumnos as FA')
-                    ->select('FA.Nombre_Alumno',
-                     'FA.Apellido1_Alumno',
-                     'FA.Apellido2_Alumno',
-                     'FA.Codigo_Familia')
-                    ->where('FA.Cedula_Alumno', '=',   $cita->Cedula_Alumno )
-                    ->get();
+                $Alumno = DB::table('Familia_Alumnos as FA')
+                        ->select('FA.Nombre_Alumno',
+                         'FA.Apellido1_Alumno',
+                         'FA.Apellido2_Alumno',
+                         'FA.Codigo_Familia')
+                        ->where('FA.Cedula_Alumno', '=',   $cita->Cedula_Alumno )
+                        ->get();
 
-            $date=date_create($cita->Fecha_Cita);
-            $fecha = date_format($date,"d - M - y");
+                $date=date_create($cita->Fecha_Cita);
+                $fecha = date_format($date,"d - M - y");
 
-            $data = array( 'titulo'=> 'Bitácora de la cita',  'email' => $Hora_Atencion[0]->Correo, 'name'=> $Hora_Atencion[0]->Nombre . ' ' . $Hora_Atencion[0]->Apellido1 . ' ' . $Hora_Atencion[0]->Apellido2, 'dia'=> $fecha, 'hora'=> $Hora_Atencion[0]->Hora, 'detalle' => 'Se confirma que la cita de atención solicitada por el padre, madre o encargado de: ' . $Alumno[0]->Nombre_Alumno . ' ' . $Alumno[0]->Apellido1_Alumno . ' ' . $Alumno[0]->Apellido2_Alumno . ', se registra que: "' . $estado . '". <br> Observación: ' . $comentario);
-            Mail::queue('Email.citas', $data, function($message) use ($data){
-                $message->to($data['email'], $data['name'])->subject('Bitácora de la cita');
-            });         
-            Citas::destroy($id);
-            $data['Respuesta'] = 'Successfull';
-            return $data['Respuesta'];
+                $data = array( 'titulo'=> 'Bitácora de la cita',  'email' => $Hora_Atencion[0]->Correo, 'name'=> $Hora_Atencion[0]->Nombre . ' ' . $Hora_Atencion[0]->Apellido1 . ' ' . $Hora_Atencion[0]->Apellido2, 'dia'=> $fecha, 'hora'=> $Hora_Atencion[0]->Hora, 'detalle' => 'Se confirma que la cita de atención solicitada por el padre, madre o encargado de: ' . $Alumno[0]->Nombre_Alumno . ' ' . $Alumno[0]->Apellido1_Alumno . ' ' . $Alumno[0]->Apellido2_Alumno . ', se registra que: "' . $estado . '". <br> Observación: ' . $comentario);
+                Mail::queue('Email.citas', $data, function($message) use ($data){
+                    $message->to($data['email'], $data['name'])->subject('Bitácora de la cita');
+                });         
+                Citas::destroy($id);
+                $data['Respuesta'] = 'Successfull';
+                return $data['Respuesta'];
+            }
         }
     }
 
