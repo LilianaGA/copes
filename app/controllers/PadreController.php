@@ -256,7 +256,7 @@ class PadreController extends BaseController
         $numberOfMonth = date('m',time());
         $year          = date('Y',time());
         $numberOfDay   = date('j',time());
-        $numberOfDaysByMonth = date('t', mktime(0, 0, 0, $month, 1, $year)); // cal_days_in_month(CAL_GREGORIAN, $numberOfMonth, $year); // 31
+        $numberOfDaysByMonth = date('t', mktime(0, 0, 0, $numberOfMonth, 1, $year)); // cal_days_in_month(CAL_GREGORIAN, $numberOfMonth, $year); // 31
         $indexByDay          = array_search($nameOfDay, $daysArray); 
         $indexByDayNeeded    = array_search($dayNeeded, $daysArray); 
         $daysForThisMonth = array();
