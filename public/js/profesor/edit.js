@@ -2,6 +2,9 @@ $( "#botonCertificado" ).click(function() {
 	var status 		= $('#select-status option:selected').text();
 	var comentario 	= $('#comment').attr('value');
 	var id 			= $('#from').attr('value');
+	if (results == null) {
+	    comentario = "";
+	}
 	
   	$('#divPrincipal').find('div').remove();
 	var html = '<div id="proceso" class="col-md-6 col-md-offset-3" >';
