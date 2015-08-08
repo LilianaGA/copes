@@ -46,7 +46,7 @@
                         </div>
                         <div class="col-md-12 form-group">
                           <label for="comment">Observaciones:</label>
-                          <textarea class="form-control" rows="5" id="comment"></textarea>
+                          <textarea class="form-control" rows="5" id="comment" style="resize: none;"></textarea>
                         </div>
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6"  style="  padding-right: 15px;">
