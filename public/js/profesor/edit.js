@@ -2,7 +2,7 @@ $( "#botonCertificado" ).click(function() {
 	var status 		= $('#select-status option:selected').text();
 	var comentario 	= $('#comment').attr('value');
 	var id 			= $('#from').attr('value');
-	if (comentario == null) {
+	if (comentario == "") {
 	    comentario = "no";
 	}
 	
