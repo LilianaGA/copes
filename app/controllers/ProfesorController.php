@@ -88,7 +88,7 @@ class ProfesorController extends BaseController
             return Redirect::route('home');
         }else{
             if ($estado == 'Pendiente') {
-                $data['Respuesta'] = 'Successfull';
+                $data['Respuesta'] = 'Successfull2';
                 return $data['Respuesta'];
             }else{
                 $cita = Citas::find($id);
