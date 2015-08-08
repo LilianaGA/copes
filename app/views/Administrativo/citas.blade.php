@@ -12,7 +12,7 @@
                 <h3 class="panel-title">Detalles de Citas</h3>
                 <div class="pull-right">
                     <button class="btn btn-default btn-xs" onclick="PrintElem('#ReporteFechas')"><i class="fa fa-print"></i> Imprimir</button>
-                    <button class="btn btn-info btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filtro</button>
+                    <!--<button class="btn btn-info btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Filtro</button>-->
                 </div>
             </div>
             <div id="ReporteFechas">
