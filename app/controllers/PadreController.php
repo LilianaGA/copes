@@ -3,6 +3,7 @@
 class PadreController extends BaseController
 {
 
+    //Validador sobre los permisos del padre
     public function validatePadre()
     {
         if (Auth::check()) {
@@ -22,6 +23,7 @@ class PadreController extends BaseController
         }
     }
 
+    //Obtiene los roles que tiene el usuario
     public function getRoles()
     {
         $permiso = DB::table('Tipos_Acceso AS TA')
@@ -33,6 +35,7 @@ class PadreController extends BaseController
         return $permiso;
     }
 
+    //Muestra los saldos de la familia
     public function showSaldos(){
         if ($this->validatePadre() == true) {
             $now = new DateTime();
@@ -73,6 +76,7 @@ class PadreController extends BaseController
         }
     }
 
+    //Formulario de cancelación de citas
     public function showCancelaCitas()
     {
         if ($this->validatePadre() == false) {
@@ -107,6 +111,7 @@ class PadreController extends BaseController
         return View::make('padre.cancelacitas', $data);
     }
 
+    //actualiza los datos de la cancelación de la cita
     public function updateCita($id){
         $cita = Citas::find($id);
         $controlcitas = new ControlCitas();
@@ -118,6 +123,7 @@ class PadreController extends BaseController
         return Redirect::route('saldos');
     }
     
+    //Muestra las citas de la familia
     public function showCitas(){
         if ($this->validatePadre() == true) {
             $data['Familia_Alumnos'] = DB::table('Familia_Alumnos as FA')
@@ -134,6 +140,7 @@ class PadreController extends BaseController
         }
     }
     
+    //Muestra el formulario de la solicitudes de certificados
     public function showCertificados(){
         if ($this->validatePadre() == true) {
             $data['Permiso']  = $this->getRoles();
@@ -143,6 +150,7 @@ class PadreController extends BaseController
         }
     }
 
+    //Muestra las materias de los alumnos
     public function showSubjects($Cedula_Alumno){
         if ($this->validatePadre() == true) {
             $data['Subjects'] = DB::table('Familia_Alumnos as FA')
@@ -155,6 +163,7 @@ class PadreController extends BaseController
         }       
     }
 
+    //Despliega las citas
     public function showApp($Cedula_Profesor)
     {
         if ($this->validatePadre() == true) {
@@ -175,6 +184,7 @@ class PadreController extends BaseController
         }   
     }
 
+    //Obtiene las citas del mes determinado
     public function showAppointByMonth($Cedula_Profesor)
     {
         if ($this->validatePadre() == true) {
@@ -238,6 +248,7 @@ class PadreController extends BaseController
         }   
     }
 
+    //Traduce el nombre del día
     private function translateDayToSpanish($daySpanish) {
 
         $daysEnglish = array('Domingo'  => 'Sunday', 'Lunes'  => 'Monday'    , 'Martes' => 'Tuesday'  , 'Miércoles' => 'Wednesday'  ,
@@ -245,7 +256,7 @@ class PadreController extends BaseController
         return $daysEnglish[$daySpanish];
     }
 
-
+    //Obtiene las fechas para las citas del actual mes
     private function appointmentForCurrentMonth($dayNeeded)
     {
         date_default_timezone_set("America/Costa_Rica");
@@ -281,6 +292,7 @@ class PadreController extends BaseController
         return $daysForThisMonth;
     }
 
+    //Reserva la cita
     public function reserveApp($cedulaA, $cedulaP, $fecha)
     {
         $Cedula_Alumno   = $cedulaA;
@@ -316,6 +328,7 @@ class PadreController extends BaseController
         return $data['Respuesta'];
     }
 
+    //Envía el correo  para la confirmación de la cita
     public function sendEmail($cedulaA, $cedulaP, $fecha)
     {
     
@@ -373,6 +386,7 @@ class PadreController extends BaseController
         /**/
     }
 
+    //Envía el correo  para la confirmación de la cita
     public function sendEmailCancela($Cedula_Alumno, $id_Hora_Atencion, $Fecha_Cita)
     {
 
@@ -426,6 +440,7 @@ class PadreController extends BaseController
         var_dump(Mail::failures());
     }
 
+    //Envía un correo para la certificación
     public function obtenerCertificado($tipo, $cedula, $nombre, $fecha, $nivel, $anio)
     {
         $padre = DB::table('Usuarios_Correos as UC')
@@ -446,6 +461,7 @@ class PadreController extends BaseController
         return $data['Respuesta'];
     }
 
+    //Obtiene el día de las citas
     public function getDate($id)
     {
        $date = new DateTime();

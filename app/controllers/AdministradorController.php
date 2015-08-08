@@ -3,6 +3,7 @@
 class AdministradorController extends BaseController
 {
 
+	//Validador sobre los permisos del administrador
 	public function validateAdministrador()
 	{
 		if (Auth::check()) {
@@ -22,6 +23,7 @@ class AdministradorController extends BaseController
         }
 	}
 
+	//Muestra la totalidad de las familias para poder desplejar los usuarios
     public function showUsuarios(){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -36,6 +38,7 @@ class AdministradorController extends BaseController
         return View::make('Administrativo.usuarios', $data);
 	}
 
+	//Obtiene los roles que tiene el usuario
 	public function getRoles()
 	{
 		$permiso = DB::table('Tipos_Acceso AS TA')
@@ -47,6 +50,7 @@ class AdministradorController extends BaseController
         return $permiso;
 	}
 
+	//Despliega todos los profesores registrados con el acceso de profesor
 	public function showProfesor(){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -67,6 +71,7 @@ class AdministradorController extends BaseController
         return View::make('Administrativo.profesor', $data);
 	}
 
+	//Obtiene las materias y secciones del profesor consultado
 	public function getSubjects($cedula){
     	if ($this->validateAdministrador() == false) {
     	    return Redirect::route('home');
@@ -83,6 +88,7 @@ class AdministradorController extends BaseController
         return Response::json($data);
 	}
 	
+	//Elimina una materia del profesor
 	public function deleteSubject($id){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -96,6 +102,7 @@ class AdministradorController extends BaseController
         return Response::json($data);
 	}
 
+	//Obtiene las materias y secciones del profesor consultado
 	public function searchProfesorSubject($id){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -112,6 +119,7 @@ class AdministradorController extends BaseController
         return Response::json($data);
 	}
 
+	// Actualiza la materia y seccion seleccionada.
 	public function updateMateria($id, $materia, $seccion)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -128,6 +136,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Obtiene los usuarios registrados a la familia
 	public function getFamily($Code)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -150,6 +159,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Obtiene los correos del usuarios
 	public function getEmails($Code)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -163,6 +173,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Obtiene los telefonos del usuarios
 	public function getPhones($Code)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -176,6 +187,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Muestra las familias que estan activas
 	public function showFamilias(){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -190,6 +202,7 @@ class AdministradorController extends BaseController
         return View::make('Administrativo.familias', $data);
 	}
 
+	//Despliega las horas de atención de todos los profesores
 	public function showAtencion(){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -245,6 +258,7 @@ class AdministradorController extends BaseController
         return View::make('Administrativo.atencion', $data);
 	}
     
+    //Muestra las citas disponibles del mes con todos los profesores
     public function showCitas(){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -278,6 +292,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los roles de los usuarios
 	public function showRoles($id){
     	if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -306,6 +321,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Crea el usuario, carga las familias
 	public function createUser()
 	{
 		if ($this->validateAdministrador() == false) {
@@ -321,6 +337,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Crea una nueva familia con la creación del código
 	public function createFamily()
 	{
 		if ($this->validateAdministrador() == false) {
@@ -337,17 +354,18 @@ class AdministradorController extends BaseController
             }
             $codigo = substr($codigo, 3, strlen($codigo));
             if ($codigo < 10) {
-            	$codigo = 'FAM00' . ($codigo + 1);	
+            	$codigo = 'FAM00' . ($codigo + 1);	// FAM00(1+)
             }elseif ($codigo < 100) {
-            	$codigo = 'FAM0' . ($codigo + 1);
+            	$codigo = 'FAM0' . ($codigo + 1);	// FAM0(10+)
             }else{
-            	$codigo = 'FAM' . ($codigo + 1);
+            	$codigo = 'FAM' . ($codigo + 1);	// FAM(100+)
             }
             $data['Codigo'] = $codigo;
 			return View::make('Administrativo.Familia.nuevo', $data);
 		}
 	}
 
+	//No esta dentro de las funciones del administrador
 	public function createCitas()
 	{
 		if ($this->validateAdministrador() == false) {
@@ -362,6 +380,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Se espera entender la función
 	public function searchSubject($cedula)
 	{
 		$alumno  = User::where('Cedula_Alumno', '', $cedula)->firstOrFail();
@@ -483,6 +502,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los detalles del usuario
 	public function Mostrar($id){
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -504,6 +524,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los datos de la familia
 	public function showFamily($id){
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -525,6 +546,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los datos del usuario para ser editado
 	public function editUser($id){
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -546,6 +568,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los datos de la familia para ser editado
 	public function editFamily($id){
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -559,6 +582,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Actualiza los datos personales del usuario
 	public function updateUser($id)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -630,6 +654,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Actualiza la contraseña
 	public function updatePass($id)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -645,6 +670,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	// Almacena los datos de la familia
 	public function updateFamily($id)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -742,6 +768,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Busca el nombre del profesor
 	public function searchTeacher($cedula) {
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -754,6 +781,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Elimina un rol
 	public function deleteRoles($id)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -783,6 +811,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Muestra los datos del estudiante para ser editados
 	public function editStudent($id){
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
@@ -796,6 +825,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Actualiza los datos del estudiante
 	public function updateStudent($id)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -876,6 +906,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Agrega un rol
 	public function addRoles($id, $tipo)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -895,6 +926,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Obtiene las familias (activas o inactivas)
 	public function statusFamily($estado)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -909,6 +941,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Muestra la información de la hora de atención
 	public function showInfo($cedula)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -941,6 +974,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Actualiza la hora de atención
 	public function updateHour($cedula, $Dia, $Hora)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -975,6 +1009,7 @@ class AdministradorController extends BaseController
 	    }
 	}
 
+	//Almacena la hora de atención del profesor
 	public function storeHour($cedula, $Dia, $Hora)
 	{
 		if ($this->validateAdministrador() == false) {
@@ -992,6 +1027,7 @@ class AdministradorController extends BaseController
 		}
 	}
 
+	//Almacena la materia y sección de un profesor
 	public function storeMateria($cedula, $materia, $seccion)
 	{
 		if ($this->validateAdministrador() == false) {

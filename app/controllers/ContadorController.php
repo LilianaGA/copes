@@ -3,6 +3,7 @@
 class ContadorController extends BaseController
 {
 
+	//Validador sobre los permisos del contador
 	public function validateContador()
 	{
 		if (Auth::check()) {
@@ -22,6 +23,7 @@ class ContadorController extends BaseController
         }
 	}
 
+	//Obtiene los roles que tiene el usuario
 	public function getRoles()
 	{
 		$permiso = DB::table('Tipos_Acceso AS TA')
@@ -33,6 +35,7 @@ class ContadorController extends BaseController
         return $permiso;
 	}
 
+	//Muestra los pagos realizados hasta la fecha
 	public function showPagos(){
         if ($this->validateContador() == true) {
     		$now = new DateTime();
@@ -67,7 +70,7 @@ class ContadorController extends BaseController
         }
 	}
 
-	
+	//Muestra una serie de reportes
 	public function showReportes(){
         if ($this->validateContador() == true) {
         	$now = new DateTime();
@@ -123,6 +126,7 @@ class ContadorController extends BaseController
         }
 	}
 
+	//Creación del nuevo pago
 	public function createPago(){
 		if ($this->validateContador() == true) {
 			$data['Estudiantes'] = DB::table('Familia_Alumnos')
@@ -140,6 +144,7 @@ class ContadorController extends BaseController
         }
 	}
 
+	//Despliega los datos de un pago
 	public function displayPay($id){
 		if ($this->validateContador() == true) {
     		$data['Pagos'] = DB::table('Pagos as P')
@@ -169,6 +174,7 @@ class ContadorController extends BaseController
         }
 	}
 
+	//Edición del pago
 	public function editPay($id){
 		if ($this->validateContador() == true) {
     		$data['Pagos'] = DB::table('Pagos as P')
@@ -198,7 +204,7 @@ class ContadorController extends BaseController
         }
 	}
 
-
+	//Actualización de los datos del pago
 	public function updatePago($id){
 		if ($this->validateContador() == true) {
 			$pagos = Pagos::find($id);
@@ -224,6 +230,7 @@ class ContadorController extends BaseController
 		}
 	}
 
+	//Obtiene las secciones de un alumno
 	public function getGroup($Cedula_Alumno){
 		if ($this->validateContador() == true) {
 			$data['Seccion'] = DB::table('Familia_Alumnos')
@@ -234,6 +241,7 @@ class ContadorController extends BaseController
 		}
 	}
 
+	//Obtiene las materias de un alumno
 	public function searchSubject($Cedula_Alumno)
 	{
 		if ($this->validateContador() == true) {
@@ -247,6 +255,7 @@ class ContadorController extends BaseController
 		}
 	}
 
+	//Almacena los datos del pago
 	public function storePay(){
 		if ($this->validateContador() == false) {
             return Redirect::route('logoutFromRol'); 
@@ -309,7 +318,7 @@ class ContadorController extends BaseController
 		}
 	}
 
-
+	//Carga la vista para el calculo de los pagos
 	public function viewCalculateNotPaidAccount()
 	{
 		if ($this->validateContador() == false) {
@@ -401,7 +410,7 @@ class ContadorController extends BaseController
 	}
 
 
-	//Reporte
+	//Obtiene los balances de la familia
 	public function getFamilyBalance($Code)
 	{
 		$now = new DateTime();
@@ -424,6 +433,7 @@ class ContadorController extends BaseController
         return Response::json($data);
 	}
 
+	//Obtiene los pagos de la familia
 	public function getPaysOfFamily($Code)
 	{
 		$now = new DateTime();
@@ -445,6 +455,7 @@ class ContadorController extends BaseController
         return Response::json($data);
 	}
 
+	//Obtiene los pagos del mes seleccionado
 	public function getPaysOfMonth($Code)
 	{
 		$now = new DateTime();
@@ -466,6 +477,7 @@ class ContadorController extends BaseController
         return Response::json($data);
 	}
 
+	//Obtiene los pagos del alumno seleccionado
 	public function getPaysOfStudent($Code)
 	{
 		$now = new DateTime();

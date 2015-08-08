@@ -2,7 +2,7 @@
 
 class ProfesorController extends BaseController
 {
-
+    //Validador sobre los permisos del profesor
     public function validateProfesor()
     {
         if (Auth::check()) {
@@ -22,6 +22,7 @@ class ProfesorController extends BaseController
         }
     }
 
+    //Obtiene los roles que tiene el usuario
     public function getRoles()
     {
         $permiso = DB::table('Tipos_Acceso AS TA')
@@ -33,6 +34,7 @@ class ProfesorController extends BaseController
         return $permiso;
     }
     
+    //Muestra la cita para ser editado
     public function showCita($id){
         if ($this->validateProfesor() == false) {
             return Redirect::route('home');
@@ -57,6 +59,7 @@ class ProfesorController extends BaseController
         return View::make('profesor.edit', $data);
     }
 
+    //Muestra las citas que puede tener asignadas
     public function showProfesor(){
         if ($this->validateProfesor() == false) {
             return Redirect::route('home');
@@ -82,6 +85,7 @@ class ProfesorController extends BaseController
 		return View::make('profesor.index', $data);
 	}
 
+    //Función para actualizar el estado de la cita
     public function updateCita($id, $estado, $comentario)
     {
         if ($this->validateProfesor() == false) {
@@ -125,6 +129,7 @@ class ProfesorController extends BaseController
         }
     }
 
+    //Función para la eliminación de la cita
     public function deleteCita($id){
         if ($this->validateProfesor() == false) {
             return Redirect::route('home');
@@ -136,6 +141,7 @@ class ProfesorController extends BaseController
         }
     }
 
+    //Función para el envió de la cancelación de la cita
     public function sendEmailCancela($Cedula_Alumno, $id_Hora_Atencion, $Fecha_Cita)
     {
         if ($this->validateProfesor() == false) {
