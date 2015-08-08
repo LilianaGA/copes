@@ -2,8 +2,8 @@ $( "#botonCertificado" ).click(function() {
 	var status 		= $('#select-status option:selected').text();
 	var comentario 	= $('#comment').attr('value');
 	var id 			= $('#from').attr('value');
-	if (results == "") {
-	    comentario = "No disponible";
+	if (comentario == null) {
+	    comentario = "";
 	}
 	
   	$('#divPrincipal').find('div').remove();
