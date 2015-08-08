@@ -3,7 +3,7 @@ $( "#botonCertificado" ).click(function() {
 	var comentario 	= $('#comment').attr('value');
 	var id 			= $('#from').attr('value');
 	if (comentario == null) {
-	    comentario = "";
+	    comentario = "no";
 	}
 	
   	$('#divPrincipal').find('div').remove();
