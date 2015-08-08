@@ -139,7 +139,7 @@ function ajaxToLoadPays(data) {
         html += '<div class="or"></div>';
         html += '<a href="/contabilidad/'+ balanceArray[i].id + '/editar" class="btn btn-danger" role="button"><span class="glyphicon glyphicon-edit"></span></a>';
 		html += '<div class="or"></div>';
-		html += '<a href="/contabilidad/'+ balanceArray[i].id + '/eliminarPago" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-trash"></span></a>';
+		html += '<a onclick="confirmar('+ balanceArray[i].id + ')" class="btn btn-primary" role="button"><span class="glyphicon glyphicon-trash"></span></a>';
         html += '</div>';
         html += '</td>';
         html += '<tr>';
