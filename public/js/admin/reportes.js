@@ -73,7 +73,7 @@ $( "#idAdministrativo" ).click(function() {
 
 
 function ajaxToDeleteRole (id, who) {
-  document.getElementById(who + '2').style.disabled = true;
+  document.getElementById(who + '2').disabled = true;
   if (id !== "0") {
     $.ajax({
 	    url:'/administracion/roles/delete/'+id,
@@ -83,7 +83,7 @@ function ajaxToDeleteRole (id, who) {
     }).done(function (data) {
       	var respond  =  data;
   		if ((respond == undefined) || (respond == 'Not Found'))  {
-  			alert("Hello! I am an alert box!!");
+  			alert("No se pudo eliminar el registro");
   		};
   		if (respond == 'Successfull') {
   			document.getElementById(who + '2').style.display = "none";
@@ -92,11 +92,11 @@ function ajaxToDeleteRole (id, who) {
   		};
     });
   }
-  document.getElementById(who + '2').style.disabled = false;
+  document.getElementById(who + '2').disabled = false;
 }
 
 function ajaxToAddRole (id, tipo, who) {
-  document.getElementById(who).style.disabled = true;
+  document.getElementById(who).disabled = true;
   if (id !== "0") {
     $.ajax({
 	    url:'/administracion/roles/add/'+id+'/'+tipo,
@@ -107,14 +107,13 @@ function ajaxToAddRole (id, tipo, who) {
     }).done(function (data) {
       var respond  =  data;
   		if ((respond == undefined) || (respond == 'Not Found'))  {
-  			alert("Upss!! Houston tenemos un problema.");
+  			alert("No se pudo guardar el registro");
   		}else{  		
   			document.getElementById(who).style.display = "none";
   			document.getElementById(who + '2').style.display = "";
   			$("#" + who + "2").attr("value", respond);
-  			//document.getElementById(who + '2').attr('value', respond);
   		};
     });
   }
-  document.getElementById(who).style.disabled = false;
+  document.getElementById(who).disabled = false;
 }
