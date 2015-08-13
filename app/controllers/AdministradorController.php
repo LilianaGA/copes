@@ -920,7 +920,7 @@ class AdministradorController extends BaseController
 				$data['Respuesta'] = 'Not Found';
 				return $data['Respuesta'];
 			}else{
-				$data['Respuesta'] = 'Successfull';
+				$data['Respuesta'] = $tipo->id;
 				return $data['Respuesta'];
 			}
 		}
