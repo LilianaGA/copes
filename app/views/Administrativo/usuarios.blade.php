@@ -65,8 +65,8 @@
                                     <td style="padding:5px;"><strong>Código de la Familia</strong></td>
                                     <td style="padding:5px;"><strong>Cédula</strong></td>
                                     <td style="padding:5px;"><strong>Nombre</strong></td>
-                                    <td style="padding:5px;"><strong>Primer Apellido</strong></td>
-                                    <td style="padding:5px;"><strong>Segundo Apellido</strong></td>
+                                    <td style="padding:5px;"><strong>Correos</strong></td>
+                                    <td style="padding:5px;"><strong>Teléfono</strong></td>
                                     <td style="padding:5px;"><strong>Opciones</strong></td>
                                 </tr>
                             </tfoot>

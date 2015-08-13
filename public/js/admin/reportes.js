@@ -73,7 +73,7 @@ $( "#idAdministrativo" ).click(function() {
 
 
 function ajaxToDeleteRole (id, who) {
-  document.getElementById(who + '2').disabled = true;
+  $("#" + who + "2" ).attr('disabled', 'disabled');
   if (id !== "0") {
     $.ajax({
 	    url:'/administracion/roles/delete/'+id,
@@ -89,14 +89,14 @@ function ajaxToDeleteRole (id, who) {
   			document.getElementById(who + '2').style.display = "none";
   			$("#" + who + "2").attr("value", "0");
   			document.getElementById(who).style.display = "";
+        $("#" + who + "2").removeAttr('disabled');
   		};
     });
   }
-  document.getElementById(who + '2').disabled = false;
 }
 
 function ajaxToAddRole (id, tipo, who) {
-  document.getElementById(who).disabled = true;
+  $("#" + who ).attr('disabled', 'disabled');
   if (id !== "0") {
     $.ajax({
 	    url:'/administracion/roles/add/'+id+'/'+tipo,
@@ -112,8 +112,8 @@ function ajaxToAddRole (id, tipo, who) {
   			document.getElementById(who).style.display = "none";
   			document.getElementById(who + '2').style.display = "";
   			$("#" + who + "2").attr("value", respond);
+        $("#" + who ).removeAttr('disabled');
   		};
     });
   }
-  document.getElementById(who).disabled = false;
 }
