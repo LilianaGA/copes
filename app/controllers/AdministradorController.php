@@ -125,12 +125,12 @@ class AdministradorController extends BaseController
 		if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
         }else{
-			$profesor = Profesor::find($id);
-			$profesor->Materia = $materia;
-			$profesor->Seccion = $seccion;
-			if ($profesor->save()) {
+			$profesor = Profesor::find($id);//buscar profesor 
+			$profesor->Materia = $materia;//materia del profesor
+			$profesor->Seccion = $seccion;//seccion
+			if ($profesor->save()) {//si guarda
 				return Response::json(true);
-			}else{
+			}else{//si da error
 				return Response::json(false);
 			}
 		}

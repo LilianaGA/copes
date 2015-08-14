@@ -57,7 +57,7 @@ function createData(data){
 	    $('#proceso').remove();
 	    $("#divPrincipal").append(html);
 	    $('#divPrincipal').delay(5000).fadeOut( "", function() {
-              window.location.replace("/profesor/index");
+              window.location.replace("/profesor/index");//cuando se cierra la animacion cambiar la url
         });
 	  }else{
 	  	var html = '<div class="container content">';
@@ -81,7 +81,7 @@ function createData(data){
 	    $('#proceso').remove();
 	    $("#divPrincipal").append(html);
 	    $('#divPrincipal').delay(5000).fadeOut( "", function() {
-              window.location.replace("/profesor/index");
+              window.location.replace("/profesor/index");//cuando se cierra la animacion cambiar la url
         });
 	  }
 }

@@ -43,7 +43,7 @@ $(document).ready(function(){
         }
     });
 
-    $('#confirm').click(function(event){
+    $('#confirm').click(function(event){  //cancelacion de la cita
         event.preventDefault();
         var id = $(this).attr('value');
         if (id !== "0") {

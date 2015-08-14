@@ -212,11 +212,11 @@ function createAppointments (data) {
 }
 
 function reservarCita(id) {
-  var cedulaA = $('#select-child option:selected').attr('value');
-  var cedulaP = $('#select-subject option:selected').attr('value');
+  var cedulaA = $('#select-child option:selected').attr('value');// obtener cedula alumno
+  var cedulaP = $('#select-subject option:selected').attr('value');// obtener cedula profesor
   var fecha   = $('#' + id).html();
   if (id !== "0") {
-      $.ajax({
+      $.ajax({  //concatenando url
         url:'/padre/reserveApp/'+cedulaA+'/'+cedulaP+'/'+fecha,
         data : {
          cedulaA:cedulaA,
@@ -238,8 +238,8 @@ function reservarCita(id) {
             html    += '</div>';
             html    += '</div>';
             html    += '</div>';
-            $("#message").append(html);
-            $('.alert-autocloseable-warning').delay(5000).fadeOut( "slow", function() {
+            $("#message").append(html);//insertar html
+            $('.alert-autocloseable-warning').delay(5000).fadeOut( "slow", function() { //animacion
               // Animation complete.
               $('#Successfull').prop("disabled", false);
               $('#Successfull').remove();
