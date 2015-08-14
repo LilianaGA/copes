@@ -13,12 +13,12 @@ class PadreController extends BaseController
                             ->where('TU.Cedula_Usuarios', '=',  Auth::user()->username )
                             ->where('TA.Descripcion', "=", 'Encargado')
                             ->get(); 
-            if(count($permiso) > 0){
+            if(count($permiso) > 0){ // cuando el indice es mayor a 1
                 return true;
             }else{
                 return false;
             }
-        }else{
+        }else{//en caso de no estar loguead
             return false;
         }
     }
@@ -72,15 +72,15 @@ class PadreController extends BaseController
             $data['Permiso']  = $this->getRoles();
             return View::make('padre.saldos', $data);
         }else{
-            return Redirect::route('logoutFromRol'); 
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }
     }
 
     //Formulario de cancelación de citas
     public function showCancelaCitas()
     {
-        if ($this->validatePadre() == false) {
-            return Redirect::route('logoutFromRol'); 
+        if ($this->validatePadre() == false) { //no tiene permisos, primer metodo en la clase
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }else{
             $date = new DateTime();
             $lastDay = $date->format('Y-m-t');
@@ -113,13 +113,13 @@ class PadreController extends BaseController
 
     //actualiza los datos de la cancelación de la cita
     public function updateCita($id){
-        $cita = Citas::find($id);
+        $cita = Citas::find($id);//buscar en citas
         $controlcitas = new ControlCitas();
         $controlcitas->Codigo_Familia = Auth::user()->Codigo_Familia;
         $controlcitas->Cantidad_Perdida = 1;
         $controlcitas->save();
-        $this->sendEmailCancela($cita->Cedula_Alumno, $cita->id_Hora_Atencion, $cita->Fecha_Cita);
-        Citas::destroy($id);
+        $this->sendEmailCancela($cita->Cedula_Alumno, $cita->id_Hora_Atencion, $cita->Fecha_Cita);//envia correo
+        Citas::destroy($id);// elimina cita
         return Redirect::route('saldos');
     }
     
@@ -136,7 +136,7 @@ class PadreController extends BaseController
             $data['Permiso']  = $this->getRoles();
             return View::make('padre.citas', $data);
         }else{
-            return Redirect::route('logoutFromRol'); 
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }
     }
     
@@ -146,7 +146,7 @@ class PadreController extends BaseController
             $data['Permiso']  = $this->getRoles();
             return View::make('padre.certificados', $data);
         }else{
-            return Redirect::route('logoutFromRol'); 
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }
     }
 
@@ -159,7 +159,7 @@ class PadreController extends BaseController
                 ->where('FA.Cedula_Alumno', '=',   $Cedula_Alumno )
                 ->join('Profesor_Materia AS PM','PM.Seccion','=','FA.Seccion_Alumno')
                 ->get();  
-                return Response::json($data); 
+                return Response::json($data); //retorna la materias 
         }       
     }
 
@@ -180,7 +180,7 @@ class PadreController extends BaseController
                 ->get();  
                 return Response::json($data); 
         }else{
-            return Redirect::route('logoutFromRol'); 
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }   
     }
 
@@ -198,27 +198,27 @@ class PadreController extends BaseController
                 foreach($data as $key)
                 {
                     $array = array();
-                    $dayNeeded = $this->translateDayToSpanish($key->Dia);
-                    $array['Hora']  = $key->Hora;
-                    $array['Dia']  = $key->Dia;
+                    $dayNeeded = $this->translateDayToSpanish($key->Dia);//optiene el dia en español 
+                    $array['Hora']  = $key->Hora;// asigna hora
+                    $array['Dia']  = $key->Dia;// asigna dia
                     
-                    $daysArray = $this->appointmentForCurrentMonth($dayNeeded);
-                    $json = array();
+                    $daysArray = $this->appointmentForCurrentMonth($dayNeeded); //citas de este mes
+                    $json = array();// crea un array
                     foreach ($daysArray as $value) {
 
-                        $array['Fecha_Cita']  = $value;
+                        $array['Fecha_Cita']  = $value;//asigna la fecha
                         $fechas = DB::table('Citas')
                                 ->select()
                                 ->where('Fecha_Cita', '=', $value)
                                 ->get(); 
                         if (count($fechas)>0) {
-                            $array['Estado_Cita']  = "P";
+                            $array['Estado_Cita']  = "P";//cita pendiente
                         }else{
-                            $array['Estado_Cita']  = "D";
+                            $array['Estado_Cita']  = "D";//cita disponible
                         }
-                        array_push($json, $array);
+                        array_push($json, $array);//inserta cita en $json
                     }
-                    $newData['Days'] = $json;
+                    $newData['Days'] = $json;//se guarda en el key days
                     
                     //var_dump($newData); die;
                     $date = new DateTime();
@@ -244,7 +244,7 @@ class PadreController extends BaseController
                     //return $this->appointmentForCurrentMonth($dayNeeded);
                 }
         }else{
-            return Redirect::route('logoutFromRol'); 
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
         }   
     }
 
@@ -259,33 +259,33 @@ class PadreController extends BaseController
     //Obtiene las fechas para las citas del actual mes
     private function appointmentForCurrentMonth($dayNeeded)
     {
-        date_default_timezone_set("America/Costa_Rica");
+        date_default_timezone_set("America/Costa_Rica");//timezone a utilizar en las citas
         $daysArray =  array(0  => 'Monday'    ,  1 => 'Tuesday'  , 2 => 'Wednesday'  ,
                          3  => 'Thursday'  ,  4 => 'Friday'   , 5 => 'Saturday'   ,
                          6  => 'Sunday' );
-        $nameOfDay     = date('l', time()); //l = name of day
-        $numberOfMonth = date('m',time());
-        $year          = date('Y',time());
-        $numberOfDay   = date('j',time());
-        $numberOfDaysByMonth = date('t', mktime(0, 0, 0, $numberOfMonth, 1, $year)); // cal_days_in_month(CAL_GREGORIAN, $numberOfMonth, $year); // 31
-        $indexByDay          = array_search($nameOfDay, $daysArray); 
-        $indexByDayNeeded    = array_search($dayNeeded, $daysArray); 
-        $daysForThisMonth = array();
-        if($indexByDay  >= $indexByDayNeeded) { //miercoles cita para lunes
-            $dayToStart =  ($numberOfDay += 7 ) - ($indexByDay  - $indexByDayNeeded);   
+        $nameOfDay     = date('l', time());    //nombre del dia 
+        $numberOfMonth = date('m',time());     //numero del mes
+        $year          = date('Y',time());     //numero de año
+        $numberOfDay   = date('j',time());     //indice del dia
+        $numberOfDaysByMonth = date('t', mktime(0, 0, 0, $numberOfMonth, 1, $year)); //numero de dias por mes
+        $indexByDay          = array_search($nameOfDay, $daysArray); //indice del dia 
+        $indexByDayNeeded    = array_search($dayNeeded, $daysArray); //indice del dia necesario
+        $daysForThisMonth = array();// array con dias posibles de citas
+        if($indexByDay  >= $indexByDayNeeded) { //ejemplo estamos miercoles cita para lunes
+            $dayToStart =  ($numberOfDay += 7 ) - ($indexByDay  - $indexByDayNeeded);    
         }
-        else {//lunes cita para miercoles
+        else {//ejemplo estamos lunes cita para miercoles
             $dayToStart =  ($numberOfDay) + ($indexByDayNeeded  - $indexByDay);
         }
-        $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;
+        $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;//concatenando la fecha
     
-        if ($dayToStart   <= $numberOfDaysByMonth) {
-            $daysForThisMonth = array($stringDate);
-            while ($dayToStart  <= $numberOfDaysByMonth) {
+        if ($dayToStart   <= $numberOfDaysByMonth) { // mientras sea menor que la cantidad de dias en el mes
+            $daysForThisMonth = array($stringDate); //inserta el primer item
+            while ($dayToStart  <= $numberOfDaysByMonth) { //mientras sea menor que la cantidad de dias del mes, hace el ciclo
                 $dayToStart += 7;//28-05-2015 
-                $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;
-                if ($dayToStart  <= $numberOfDaysByMonth) { 
-                    array_push($daysForThisMonth,$stringDate);
+                $stringDate = $numberOfMonth .  "-"  . $dayToStart . "-" .  $year;//concatenando la fecha
+                if ($dayToStart  <= $numberOfDaysByMonth) { //
+                    array_push($daysForThisMonth,$stringDate); //inserta $stringDate en $daysForThisMonth
                 }
             }
         }
@@ -295,8 +295,8 @@ class PadreController extends BaseController
     //Reserva la cita
     public function reserveApp($cedulaA, $cedulaP, $fecha)
     {
-        $Cedula_Alumno   = $cedulaA;
-        $Cedula_Profesor = $cedulaP;
+        $Cedula_Alumno   = $cedulaA;//cedula alumno
+        $Cedula_Profesor = $cedulaP;//cedula profesor
         $Fecha   = $fecha;
         $id_Hora_Atencion = DB::table('Hora_Atencion as HA')
                 ->select('HA.id')
@@ -315,11 +315,11 @@ class PadreController extends BaseController
             $cita->Cedula_Alumno = $Cedula_Alumno;
             $cita->id_Hora_Atencion = $idHA;
             $cita->Fecha_Cita = $Fecha;
-            $cita->Estado_Cita = 'P';
-            if (!$cita->save()) {
+            $cita->Estado_Cita = 'P';//pendiente
+            if (!$cita->save()) {//error al guardar cita
                 $data['Respuesta'] = 'Not Found';
                 return $data['Respuesta'];
-            }else{
+            }else{//guardar cita
                 $data['Respuesta'] = 'Successfull';
                 return $data['Respuesta'];
             }
@@ -357,7 +357,7 @@ class PadreController extends BaseController
                 ->where('FA.Cedula_Alumno', '=',   $cedulaA )
                 ->get(); 
 
-
+        //despliega las iniciales del mes segun el numero de mes
         $mons = array('01' => "Ene", '02' => "Feb", '03' => "Mar", '04' => "Abr", '05' => "May", '06' => "Jun", '07' => "Jul", '08' => "Ago", '09' => "Sep", '10' => "Oct", '11' => "Nov", '12' => "Dec");
         $fechaAux = substr($fecha,3,2) . "/" . $mons[substr($fecha,0,2)] . "/" . substr($fecha,6,6);
 
@@ -432,7 +432,7 @@ class PadreController extends BaseController
             $message->to($data['email'], $data['name'])->subject('Aviso de Cancelación');
         }); 
         var_dump(Mail::failures());
-
+        
         $data = array( 'titulo'=> 'Aviso de Cancelación',  'email' => 'secretaria.secundaria@copes.ed.cr', 'name'=> 'Secretaría', 'dia'=> $fecha, 'hora'=> $Hora_Atencion[0]->Hora, 'detalle' => 'Se confirma la cancelación de la cita de: ' . $padre[0]->Nombre . ' ' . $padre[0]->Apellido1 . ' ' . $padre[0]->Apellido2 . ' con el Docente: ' . $Hora_Atencion[0]->Nombre . ' ' . $Hora_Atencion[0]->Apellido1 . ' ' . $Hora_Atencion[0]->Apellido2 . ' ha sido cancelada');
         Mail::queue('Email.citas', $data, function($message) use ($data){
             $message->to($data['email'], $data['name'])->subject('Aviso de Cancelación');
