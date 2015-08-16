@@ -113,7 +113,7 @@
                         </div>
                         <div class="col-md-4 form-group"  style="  padding-right: 15px;">
                             <label>Fecha de Pago</label>
-                            <input id="Fecha_Pago" name="Fecha_Pago" type="text" class="form-control"value='{{date("d-m-Y", strtotime($usr->Fecha_Pago))}}' onblur="resultDate()">
+                            <input id="Fecha_Pago" name="Fecha_Pago" type="text" class="form-control"value='{{date("d-m-Y", strtotime($usr->Fecha_Pago))}}' onblur="resultDate()" placeholder="10-10-2015">
                             <input id="Fecha_Pago1" name="Fecha_Pago1" style="display:none;" type="text" class="form-control"value='{{date("d-m-Y", strtotime($usr->Fecha_Pago))}}'>
                         </div>
                         <div class="col-md-4 form-group"  style="  padding-right: 15px;">
