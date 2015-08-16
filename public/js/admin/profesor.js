@@ -79,7 +79,7 @@ function getSubjects() {
         if (balanceArray.length == 0) {
             var html = '<tr class="no-result text-center"><td colspan="3">No hemos encontrado datos para este(a) docente</td></tr>';
             $("#Content").append(html);
-            //document.getElementById("nuevo").disabled = true;
+            document.getElementById("nuevo").disabled = false;
         }
         });
     }else{
