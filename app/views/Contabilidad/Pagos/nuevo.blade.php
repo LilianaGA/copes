@@ -64,7 +64,7 @@
                     </div>
                     <div class="col-md-4 form-group" style="  padding-right: 15px;">
                         <label>Fecha de Pago</label>
-                        <input id="Fecha_Pago" name="Fecha_Pago" type="text" class="form-control" value="" onblur="resultDate()">
+                        <input id="Fecha_Pago" name="Fecha_Pago" type="text" class="form-control" value="" onblur="resultDate()" placeholder="10-10-2015">
                     </div>
                     <div class="col-md-4 form-group" style="  padding-right: 15px;">
                        <label>Banco</label>
