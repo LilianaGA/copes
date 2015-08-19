@@ -42,6 +42,7 @@ class UsuarioController extends BaseController {
 	                    ->select('Estado')
 	                    ->where('Codigo_Familia', '=',  Auth::user()->Codigo_Familia )
 	                    ->get(); 
+	                    
         	if ($status[0]->Estado == 'T') {
 	        	if(count($permiso) > 0){
 		    		switch ($permiso[0]->Descripcion) {

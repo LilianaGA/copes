@@ -53,7 +53,7 @@
 						<span class="input-group-addon danger"><span class="glyphicon glyphicon-remove"></span></span>
 					</div>
 				</div> 
-                <button type="button" id="botonCertificado" class="btn btn-success col-xs-12" disabled>Submit</button>
+                <button type="button" id="botonCertificado" class="btn btn-success col-xs-12" disabled>Enviar</button>
             </form>
         </div>
     </div>
