@@ -449,7 +449,7 @@ class ContadorController extends BaseController
 	                    		'FA.Seccion_Alumno',
 	                    		'P.Mensualidad')
                         ->where('P.Codigo_Familia', '=', $Code)
-                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), '30-11-' . $now->format("Y")))
+                        ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), '11-30-' . $now->format("Y")))
                         ->orderBy('P.Mensualidad' , 'asc' )
                         ->get(); 
         return Response::json($data);

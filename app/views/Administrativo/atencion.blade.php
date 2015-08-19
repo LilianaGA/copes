@@ -24,6 +24,7 @@
                     <thead>
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="Nombre del Profesor" disabled></th>
+                            <th><input type="text" class="form-control" placeholder="Día" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Hora" disabled></th>
                         </tr>
                     </thead>
