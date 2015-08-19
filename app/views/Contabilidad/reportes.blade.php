@@ -168,7 +168,7 @@
 					            <table class="table">
 					                <thead>
 					                    <tr class="filters">
-					                        <th><input type="text" class="form-control" placeholder="Nombre del Alumno" disabled></th>
+					                        <th><input type="text" class="form-control" placeholder="Familia" disabled></th>
 					                        <th><input type="text" class="form-control" placeholder="Recargos" disabled></th>
 					                        <th><input type="text" class="form-control" placeholder="Diferencias" disabled></th>
 					                        <th><input type="text" class="form-control" placeholder="Monto Pendiente" disabled></th>

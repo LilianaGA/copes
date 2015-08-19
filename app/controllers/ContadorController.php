@@ -99,6 +99,9 @@ class ContadorController extends BaseController
 	                    ->whereBetween('P.Fecha_Pago', array('01-01-' . $now->format("Y"), $now->format('m-d-Y')))
 	                    ->where('P.Recargo', "=", 0)
 	                    ->where('S.Diferencia', "=", 0)
+	                    ->orderBy('P.Mensualidad', 'asc')
+	                    ->orderBy('FA.Seccion_Alumno', 'asc')
+	                    ->orderBy('FA.Nombre_Alumno', 'asc')
 	                    ->get();
 			$data['MontosMoroso'] = 
         		DB::select(
