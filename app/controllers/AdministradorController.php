@@ -353,12 +353,13 @@ class AdministradorController extends BaseController
             	$codigo = $fam->Codigo_Familia;
             }
             $codigo = substr($codigo, 3, strlen($codigo));
+            $codigo = $codigo +1;
             if ($codigo < 10) {
-            	$codigo = 'FAM00' . ($codigo + 1);	// FAM00(1+)
+            	$codigo = 'FAM00' . $codigo;	// FAM00(1+)
             }elseif ($codigo < 100) {
-            	$codigo = 'FAM0' . ($codigo + 1);	// FAM0(10+)
+            	$codigo = 'FAM0' . $codigo;	// FAM0(10+)
             }else{
-            	$codigo = 'FAM' . ($codigo + 1);	// FAM(100+)
+            	$codigo = 'FAM' . $codigo;	// FAM(100+)
             }
             $data['Codigo'] = $codigo;
 			return View::make('Administrativo.Familia.nuevo', $data);
