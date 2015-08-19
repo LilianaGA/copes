@@ -1,7 +1,9 @@
+//BotonCertificado => Boton de guardar
 $( "#botonCertificado" ).click(function() {
 	var status 		= $('#select-status option:selected').text();
 	var comentario 	= $('#comment').attr('value');
 	var id 			= $('#from').attr('value');
+
 	if (comentario == "") {
 	    comentario = "no";
 	}
@@ -59,7 +61,7 @@ function createData(data){
 	    $('#divPrincipal').delay(5000).fadeOut( "", function() {
               window.location.replace("/profesor/index");//cuando se cierra la animacion cambiar la url
         });
-	  }else{
+	  }else{ // Si no es por que no modifico nada
 	  	var html = '<div class="container content">';
 	    html += '<div class="row">';
 	    html += '<div class="col-md-6 col-md-offset-3">';

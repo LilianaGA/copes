@@ -82,10 +82,10 @@ function getFamilyBalance() {
             var html = "";
             var today = new Date(balanceArray[i].Fecha_Pago);
             var dateString = "";
-            if (today.getDay() < 10) {
-                dateString = '0' + today.getDay();
+            if (today.getDate() < 10) {
+                dateString = '0' + today.getDate();
             }else{
-                dateString = today.getDay();
+                dateString = today.getDate();
             }
             dateString += "-";
             if ((today.getMonth() + 1)< 10) {

@@ -1,3 +1,5 @@
+//Para la animación del cambio de contenido
+
 $(document).ready(function() {
   $('#olvidado').click(function(e) {
     e.preventDefault();
@@ -10,8 +12,8 @@ $(document).ready(function() {
 });
 
 
+// Simula la validación sobre las reglas de la contraseña
 $(document).ready(function () {
-
     $("input[type=password]").keyup(function () {
         var ucase = new RegExp("[A-Z]+");
         var lcase = new RegExp("[a-z]+");

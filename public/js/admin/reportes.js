@@ -1,3 +1,11 @@
+/*-------------------
+*
+* Roles
+* Who       => 'Botón Verde'
+* Who + "2" => 'Botón Rojo'
+*
+*-------------------*/
+
 $( document ).ready(function() {
 
 });
@@ -19,13 +27,19 @@ $( "#btnMateria" ).click(function() {
 
 //Functions to delete o add role of Encargado
 $( "#idEncargado2" ).click(function() {
-  var id = $('#idEncargado2').attr('value');
+  var id = $('#idEncargado2').attr('value'); // ID de tupla en la BD
   var who = "idEncargado";
   ajaxToDeleteRole(id, who);
 });
 
+/*-----------------
+  id  = Corresponde al valor del item en HTML
+  who = Corresponde al id del item en HTML
+  1   = Corresponde al id de la tabla 
+-------------------*/
+
 $( "#idEncargado" ).click(function() {
-  var id = $('#idEncargado').attr('value');
+  var id = $('#idEncargado').attr('value');// Número de cédula
   var who = "idEncargado";
   ajaxToAddRole(id, 1, who);
 });
@@ -76,7 +90,7 @@ function ajaxToDeleteRole (id, who) {
   $("#" + who + "2" ).attr('disabled', 'disabled');
   if (id !== "0") {
     $.ajax({
-	    url:'/administracion/roles/delete/'+id,
+	    url:'/administracion/roles/delete/'+id, // Número de tupla
 	    data : {
 	      id:id
 	    }
@@ -101,8 +115,8 @@ function ajaxToAddRole (id, tipo, who) {
     $.ajax({
 	    url:'/administracion/roles/add/'+id+'/'+tipo,
 	    data : {
-	      id:id,
-	      tipo:tipo
+	      id:id, // Cédula
+	      tipo:tipo // Identificador del rol
 	    }
     }).done(function (data) {
       var respond  =  data;

@@ -2,7 +2,7 @@ $( document ).ready(function() {
 
 });
 
-function confirmar (id) {
+function confirmar (id) {  // Confirmación de la eliminación
     event.preventDefault();
     if (confirm('¿Está seguro que desea borrar?')) { 
         deleteSubject(id);
@@ -16,7 +16,7 @@ $( "#btnMateria" ).click(function() {
   $.ajax({
       url:'/Administrativo/storeMateria/'+id+'/'+materia+'/'+seccion,
       data : {
-        cedula:id,
+        cedula:id, // Cédula del profesor
         materia:materia,
         seccion:seccion
       }
@@ -36,7 +36,7 @@ $( "#btnMateriaUpdate" ).click(function() {
   $.ajax({
       url:'/Administrativo/updateMateria/'+id+'/'+materia+'/'+seccion,
       data : {
-        cedula:id,
+        cedula:id, // id de la tupla 
         materia:materia,
         seccion:seccion
       }
@@ -50,7 +50,7 @@ $( "#btnMateriaUpdate" ).click(function() {
 });
 
 function getSubjects() {
-    var id = $('#select-profesor option:selected').attr('value');
+    var id = $('#select-profesor option:selected').attr('value'); // Cédula del profesor
     if (id !== "0") {
         $('#Content tr').remove();
         $.ajax({
@@ -91,7 +91,7 @@ function deleteSubject(id) {
     $.ajax({
         url:'/Administrativo/'+id+'/eliminarMateria',
         data : {
-            id:id
+            id:id // Tupla
         }
     }).done(function (data) {
         getSubjects();
@@ -102,7 +102,7 @@ function editSubject(id) {
     $.ajax({
         url:'/Administrativo/'+id+'/searchSubject',
         data : {
-            id:id
+            id:id // Tupla
         }
     }).done(function (data) {
         var balanceArray  =  data['Materias'];

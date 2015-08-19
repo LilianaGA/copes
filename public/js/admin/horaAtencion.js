@@ -15,10 +15,11 @@ $(document).ready(function() {
 	});
 });
 
-function demoDisplay() {
+function demoDisplay() { // El Nuevo Hora de Atención
 	$(".hidden-form").attr("style", "display:none");
 }
 
+//Cuando cambia o selecciona el profesor
 $(document).on('change','#select-profesor',function(){
    var id = $('#select-profesor option:selected').attr('value');
   if (id !== "0") {

@@ -1,3 +1,4 @@
+// Bootsnip
 
     function PrintElem(elem)
     {
@@ -21,6 +22,7 @@
 
         return true;
     }
+    
     $('#confirm').click(function(event){
         event.preventDefault();
         var id = $(this).attr('href');
