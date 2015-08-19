@@ -37,30 +37,36 @@ class UsuarioController extends BaseController {
 	                    ->where('TU.Cedula_Usuarios', '=',  Auth::user()->username )
 	                    ->orderBy('TA.id', 'desc')
 	                    ->get(); 
-		
-		   	if(count($permiso) > 0){
-	    		switch ($permiso[0]->Descripcion) {
-	    			case "Administrativo";
-		    			return Redirect::to('administracion/usuarios')
-	    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 . ' ha iniciado sesión correctamente');
-		    			break;
-	    			case "Contador";
-		    			return Redirect::to('contabilidad/pagos')
-	    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 . ' ha iniciado sesión correctamente');
-		    			break;
-		    		case "Profesor";
-		    			return Redirect::to('profesor/index')
-	    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 .' ha iniciado sesión correctamente');
-		    			break;
-	    			case "Encargado":
-		    			return Redirect::to('padre/saldos')
-	    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 .' ha iniciado sesión correctamente');
-		    			break;
-		    		default:
-		    			return Redirect::route('logoutFromRol'); 
-		    			break;
+
+            $status = DB::table('Codigo_Familia')
+	                    ->select('Estado')
+	                    ->where('Codigo_Familia', '=',  Auth::user()->Codigo_Familia )
+	                    ->get(); 
+        	if ($status[0]->Estado == 'T') {
+	        	if(count($permiso) > 0){
+		    		switch ($permiso[0]->Descripcion) {
+		    			case "Administrativo";
+			    			return Redirect::to('administracion/usuarios')
+		    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 . ' ha iniciado sesión correctamente');
+			    			break;
+		    			case "Contador";
+			    			return Redirect::to('contabilidad/pagos')
+		    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 . ' ha iniciado sesión correctamente');
+			    			break;
+			    		case "Profesor";
+			    			return Redirect::to('profesor/index')
+		    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 .' ha iniciado sesión correctamente');
+			    			break;
+		    			case "Encargado":
+			    			return Redirect::to('padre/saldos')
+		    		        	->with('flash_success', Auth::user()->Nombre . ' ' . Auth::user()->Apellido1 .' ha iniciado sesión correctamente');
+			    			break;
+			    		default:
+			    			return Redirect::route('logoutFromRol'); 
+			    			break;
+			    	}
 		    	}
-	    	}
+		    }
 	    	Auth::logout();
     	}//IF de Auth
 	    // Si la autenticación fallo volvemos a cargar el formulario de login
