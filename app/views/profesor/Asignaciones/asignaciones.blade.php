@@ -210,15 +210,15 @@
                                 <label for="trabajo" class="control-label">Tipo de trabajo</label>
                                 <div class="form-group input-group">
                                     <span class="input-group-addon"><span class="glyphicon glyphicon-tags"></span></span>
-                                    @if(isset($tipos))
-                                        @if(count($tipos)>0) 
-                                            <select id="txt_trabajo" data-placeholder="Seleccione un tipo de trabajo" class="form-control multiselect multiselect-icon" role="multiselect">
+                                    <select id="txt_trabajo" data-placeholder="Seleccione un tipo de trabajo" class="form-control multiselect multiselect-icon" role="multiselect">
+                                        @if(isset($tipos))
+                                            @if(count($tipos)>0) 
                                                 @foreach($tipos as $tipo)
                                                     <option value="{{$tipo->id}}">{{$tipo->Tipo_Trabajo}}</option>  
                                                 @endforeach
-                                            </select>
+                                            @endif
                                         @endif
-                                    @endif
+                                    </select>
                                     <span class="input-group-addon" data-toggle="modal" data-target="#trabajosModal"><i class="glyphicon glyphicon-plus"></i></span>
                                 </div>
                             </div>
