@@ -50,29 +50,29 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                            <tfoot>
-                                @if (($Diferencia < 0) || ($Recargo > 0))
-                                    <tr class="btn-primary" style="display: table-row;">
-                                        <td>Total Pagado</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>¢{{number_format(abs($Diferencia) + $MontoRecibo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($MontoRecibo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($Recargo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($Diferencia, 0, ',', '.')}}</td>
-                                    </tr>
-                                @else
-                                    <tr class="btn-success" style="display: table-row;">
-                                        <td>Total Pagado</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>¢{{number_format(abs($Diferencia) + $MontoRecibo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($MontoRecibo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($Recargo, 0, ',', '.')}}</td>
-                                        <td>¢{{number_format($Diferencia, 0, ',', '.')}}</td>
-                                    </tr>
-                                @endif
-                            </tfoot>
+                        <tfoot>
+                            @if (($Diferencia < 0) || ($Recargo > 0))
+                                <tr class="btn-primary" style="display: table-row;">
+                                    <td>Total Pagado</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>¢{{number_format(abs($Diferencia) + $MontoRecibo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($MontoRecibo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($Recargo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($Diferencia, 0, ',', '.')}}</td>
+                                </tr>
+                            @else
+                                <tr class="btn-success" style="display: table-row;">
+                                    <td>Total Pagado</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>¢{{number_format(abs($Diferencia) + $MontoRecibo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($MontoRecibo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($Recargo, 0, ',', '.')}}</td>
+                                    <td>¢{{number_format($Diferencia, 0, ',', '.')}}</td>
+                                </tr>
+                            @endif
+                        </tfoot>
                     </table>
                 </div>
             </div>

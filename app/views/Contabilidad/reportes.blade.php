@@ -223,7 +223,7 @@
 		                </div>
 		                <div class="col-md-3">
 		                    <button onclick="getFamilyBalance()" class="btn btn-default navbar-btn"> <span class="glyphicon glyphicon-search"></span>&nbsp; Buscar</button>
-		                    <button onclick="clearTable()" class="btn btn-primary navbar-btn"> <span class="glyphicon glyphicon-search"></span>&nbsp; Limpiar</button>
+		                    <button onclick="clearTable()" class="btn btn-primary navbar-btn"> <span class="glyphicon glyphicon-refresh"></span>&nbsp; Limpiar</button>
 		                </div>
 		            </div>
                 	<div class="panel panel widget filterable">

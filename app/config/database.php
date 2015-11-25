@@ -70,6 +70,7 @@ return array(
 			'database' => 'df555n64ii6jao',
 			//'database' => 'copes2',
 			'username' => 'iuabsrgtdzvruq',
+			//'username' => 'postgres',
 			'password' => '7IbpDgBH5-HcMfsvcaIH0bygXF',
 			//'password' => '12345',
 			'charset'  => 'utf8',

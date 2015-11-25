@@ -56,6 +56,30 @@
 | Rutas Perfil de Administrador
 |--------------------------------------------------------------------------
 */
+    // Grettel Monge Rojas
+    Route::get('Administrativo/prematricula', array('as' => 'AdminPrematricula', 'uses' => 'AdministradorController@prematricula'))->before('auth');
+    Route::get('administracion/parametros/{id}/{tipo}', array('as' => 'statusPrematricula', 'uses' => 'AdministradorController@prematriculaUpdate'))->before('auth');
+    Route::get('administracion/{id}/getManager', 'AdministradorController@getManager')->before('auth'); 
+    Route::get('administracion/{id}/getStudent', 'AdministradorController@getStudent')->before('auth'); 
+    Route::get('administracion/{id}/getNewStudent', 'AdministradorController@getNewStudent')->before('auth');
+    Route::put('administracion/updateManager/{id}', 'AdministradorController@updateManager')->before('auth'); 
+    Route::put('administracion/updateManagerEmails/{id}', 'AdministradorController@updateManagerEmails')->before('auth'); 
+    Route::put('administracion/updateManagerPhones/{id}', 'AdministradorController@updateManagerPhones')->before('auth'); 
+    Route::put('Administrativo/updateStudent2/{id}', 'AdministradorController@updateStudent2')->before('auth'); 
+    Route::post('storeStudent2', array('as' => 'storeStudent2','uses' => 'AdministradorController@storeStudent2'))->before('auth');
+    Route::post('finishFamily', array('as' => 'finishFamily','uses' => 'AdministradorController@finishFamily'))->before('auth'); 
+    Route::get('correo', 'AdministradorController@correo')->before('auth');
+    Route::get('administracion/rubros', array('as' => 'AdminRubros', 'uses' => 'AdministradorController@Rubros'))->before('auth');
+    Route::get('Administrativo/searchSubjetcs/{id}', 'AdministradorController@searchSubjetcs')->before('auth')->before('auth');
+    Route::get('Administrativo/deleteItem/{id}', 'AdministradorController@deleteItem')->before('auth')->before('auth');
+    Route::get('Administrativo/searchItem/{id}', 'AdministradorController@searchItem')->before('auth')->before('auth');
+    Route::get('Administrativo/searchItems/{nivel}/{materia}', 'AdministradorController@searchItems')->before('auth')->before('auth');
+    Route::post('createNewItem', array('as' => 'createNewItem','uses' => 'AdministradorController@createNewItem'))->before('auth');
+    Route::put('Administrativo/updateItem/{id}', 'AdministradorController@updateItem')->before('auth'); 
+    Route::post('Administrativo/newType', 'AdministradorController@newType')->before('auth');
+    Route::get('Administrativo/getRubros', array('as' => 'getAdminRubros','uses' => 'AdministradorController@getRubros'))->before('auth'); 
+    Route::get('Administrativo/searchRubros/{seccion}/{materia}/{periodo}/{anio}', 'AdministradorController@searchRubros')->before('auth');
+    // Grettel Monge Rojas
     Route::get('administracion/usuarios', array('as' => 'usuarios', 'uses' => 'AdministradorController@showUsuarios'))->before('auth');
     Route::get('administracion/profesor', array('as' => 'AdminProfesor', 'uses' => 'AdministradorController@showProfesor'))->before('auth');
     Route::get('administracion/citas', array('as' => 'AdminCitas', 'uses' => 'AdministradorController@showCitas'))->before('auth');
@@ -86,7 +110,7 @@
     Route::get('Administrativo/{id}/editStudent', array('as' => 'editStudent','uses' => 'AdministradorController@editStudent'))->before('auth'); 
     Route::put('Administrativo/{id}/updateStudent', array('as' => 'updateStudent','uses' => 'AdministradorController@updateStudent'))->before('auth'); 
     Route::get('Administrativo/statusFamily/{id}', 'AdministradorController@statusFamily')->before('auth');
-    Route::get('Administrativo/searchInfo/{id}', 'AdministradorController@showInfo')->before('auth')->before('auth');
+    Route::get('Administrativo/searchInfo/{id}', 'AdministradorController@showInfo')->before('auth');
     Route::get('Administrativo/updateHour/{CedulaP}/{Dia}/{Hora}', 'AdministradorController@updateHour')->before('auth');
     Route::get('Administrativo/storeHour/{CedulaP}/{Dia}/{Hora}', 'AdministradorController@storeHour')->before('auth');
     Route::get('Administrativo/storeMateria/{Cedula}/{Materia}/{Seccion}', 'AdministradorController@storeMateria')->before('auth');
@@ -104,13 +128,30 @@
 | Rutas Perfil de Profesor
 |--------------------------------------------------------------------------
 */
+    // Grettel Monge Rojas
+    Route::get('profesor/asistencia', array('as' => 'asistenciaProfe', 'uses' => 'ProfesorController@asistencia'))->before('auth');
+    Route::get('profesor/getStudents/{seccion}', 'ProfesorController@getStudents')->before('auth');
+    Route::get('profesor/sendClassList/{estudiantes}', 'ProfesorController@sendClassList')->before('auth');
+    Route::get('profesor/asignaciones', array('as' => 'asignacionesProfe', 'uses' => 'ProfesorController@asignaciones'))->before('auth');
+    Route::get('profesor/entrega', array('as' => 'entregaProfe', 'uses' => 'ProfesorController@entrega'))->before('auth');
+    Route::get('profesor/searchInfo/{seccion}/{materia}', 'ProfesorController@searchInfo')->before('auth');
+    Route::post('profesor/saveInfo', array('as' => 'saveInfo','uses' => 'ProfesorController@saveInfo'))->before('auth'); 
+    Route::get('profesor/deleteItem/{id}', 'ProfesorController@deleteItem')->before('auth');
+    Route::get('profesor/searchItem/{id}', 'ProfesorController@searchItem')->before('auth');
+    Route::post('profesor/updateItem/{id}', 'ProfesorController@updateItem')->before('auth');
+    Route::post('profesor/newType', 'ProfesorController@newType')->before('auth');
+    Route::get('profesor/getItem/{seccion}/{materia}', 'ProfesorController@getItem')->before('auth');
+    Route::get('profesor/saveItemStudent/{arr}/{id}', 'ProfesorController@saveItemStudent')->before('auth');
+    Route::get('profesor/getRubros', array('as' => 'getRubros','uses' => 'ProfesorController@getRubros'))->before('auth'); 
+    Route::get('profesor/searchRubros/{seccion}/{materia}/{periodo}/{anio}', 'ProfesorController@searchRubros')->before('auth');
+    Route::get('profesor/searchRubrosAlumno/{cedula}/{periodo}/{anio}', 'ProfesorController@searchRubrosAlumno')->before('auth');
+    Route::get('profesor/updateItemAlumno/{arr}', 'ProfesorController@updateItemAlumno')->before('auth');
+    // Grettel Monge Rojas
     Route::get('profesor/index', array('as' => 'principalProfe', 'uses' => 'ProfesorController@showProfesor'))->before('auth');
     Route::get('profesor/{id}/editar', array('as' => 'editarCita', 'uses' => 'ProfesorController@showCita'))->before('auth');
     Route::get('profesor/{id}/{estado}/{comentario}', 'ProfesorController@updateCita')->before('auth');
     Route::get('profesor/{id}', 'ProfesorController@deleteCita')->before('auth');
-	
-
-
+    
 /*
 |--------------------------------------------------------------------------
 | Rutas Perfil de Padre
@@ -124,6 +165,26 @@
     Route::get('padre/showApp/{id}', 'PadreController@showApp')->before('auth');
     Route::get('padre/showAppointByMonth/{id}', 'PadreController@showAppointByMonth')->before('auth');
     Route::get('padre/reserveApp/{CedulaA}/{CedulaP}/{Fecha}', 'PadreController@reserveApp')->before('auth');
+//Grettel Monge
+    Route::get('padre/getAsignaciones/{cedula}/{seccion}/{materia}', 'PadreController@getAsignaciones')->before('auth');
+    Route::get('padre/asignaciones', array('as' => 'asignacionesPadre', 'uses' => 'PadreController@showAsignaciones'))->before('auth');
+    Route::post('storeNewStudent', array('as' => 'storeNewStudent','uses' => 'PadreController@storeNewStudent'))->before('auth'); 
+    Route::get('padre/prematricula', array('as' => 'prematricula', 'uses' => 'PadreController@getAllFamily'))->before('auth');
+    Route::get('padre/{id}/getStudent', 'PadreController@getStudent')->before('auth'); 
+    Route::get('padre/{id}/getNewStudent', 'PadreController@getNewStudent')->before('auth');
+    Route::get('padre/{id}/getManager', 'PadreController@getManager')->before('auth'); 
+    Route::put('padre/{id}/getManager', 'PadreController@getManager')->before('auth'); 
+    Route::put('updateManagerEmails/{id}', 'PadreController@updateManagerEmails')->before('auth'); 
+    Route::put('updateManagerPhones/{id}', 'PadreController@updateManagerPhones')->before('auth'); 
+    Route::put('updateManager/{id}', array('as' => 'updateManager','uses' => 'PadreController@updateManager'))->before('auth'); 
+    Route::put('updateStudent2/{id}', array('as' => 'updateStudent2','uses' => 'PadreController@updateStudent2'))->before('auth'); 
+    Route::put('updateNewStudent/{id}', array('as' => 'updateNewStudent','uses' => 'PadreController@updateNewStudent'))->before('auth'); 
+    Route::get('padre/getEmails', 'PadreController@getEmails')->before('auth');
+    Route::get('padre/getPhones', 'PadreController@getPhones')->before('auth');
+    Route::get('padre/getEmails/{id}', 'PadreController@getEmailsID')->before('auth');
+    Route::get('padre/getPhones/{id}', 'PadreController@getPhonesID')->before('auth');
+    Route::get('padre/confirm', 'PadreController@confirm')->before('auth');
+// Grettel Monge
     Route::get('padre/{id}', 'PadreController@updateCita')->before('auth');
     Route::get('padre/citas/{id}', 'PadreController@getDate')->before('auth');
     Route::get('padre/sendEmail/{CedulaA}/', 'PadreController@sendEmail')->before('auth');

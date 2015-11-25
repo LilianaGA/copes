@@ -481,4 +481,425 @@ class PadreController extends BaseController
                                 and FA."Codigo_Familia" =\'' . Auth::user()->Codigo_Familia . '\''));
         return Response::json($data); 
     }
+
+    /*
+	*
+    *	Grettel Monge Rojas
+	*
+    */
+
+	public function getAllFamily()
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+        	$id = Auth::user()->Codigo_Familia;
+        	$data['Familia'] = DB::table('Codigo_Familia as FA')
+	                    ->select('FA.id','FA.Codigo_Familia', 'FA.Apellido1', 'FA.Apellido2')
+	                    ->where('FA.Codigo_Familia', '=', $id)
+	                    ->get();
+        	$data['Encargados'] = DB::table('Usuarios as U')
+	                    ->select('U.id','U.Cedula', 'U.Nombre', 'U.Apellido1', 'U.Apellido2', 'U.Direccion')
+	                    ->where('U.Codigo_Familia', '=', $id)
+	                    ->get();
+	    	$data['Hijos'] = DB::table('Familia_Alumnos as FA')
+	                    ->select('FA.id','FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno', 'FA.Nivel_Alumno', 'FA.Fecha_Nacimiento')
+	                    ->where('FA.Codigo_Familia', '=', $id)
+	                    ->get();
+        	$data['Prematriculado'] = DB::table('Nuevo_Ingreso as FA')
+	                    ->select('FA.id','FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno', 'FA.Fecha_Nacimiento', 'FA.Nivel_Alumno')
+	                    ->where('FA.Codigo_Familia', '=', $id)
+	                    ->get();
+	        $data['Permiso']  = $this->getRoles();  
+            $data['Periodo']  = DB::table('Parametros')
+                        ->select('Estado')
+                        ->where('Nombre', '=', 'Prematricula')
+                        ->get();   
+            $data['Prematricula']  = DB::table('Prematricula')
+                        ->select('Codigo_Familia')
+                        ->where('Codigo_Familia', '=', Auth::user()->Codigo_Familia)
+                        ->where('Anio', '=', date('Y') + 1)
+                        ->get(); 	
+			return View::make('padre.prematricula', $data);
+		}
+	}
+
+	/**
+	 * Almacena un nuevo registro en base de datos
+	 *
+	 * @return Response
+	 */
+	public function storeNewStudent()
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			$alumno = new NuevoIngreso();
+			$alumno->Codigo_Familia = Input::get('codigofamilia');
+			$alumno->Cedula_Alumno = Input::get('cedula');
+			$alumno->Nombre_Alumno = Input::get('nombre');
+			$alumno->Apellido1_Alumno = Input::get('apellido1');
+			$alumno->Apellido2_Alumno = Input::get('apellido2');
+			$alumno->Nivel_Alumno = Input::get('nivel');
+            $alumno->Fecha_Nacimiento = Input::get('nacimiento');
+			$alumno->save();
+            return Response::json($alumno); 
+		}
+	}
+
+	//Obtiene la información del alumno
+    public function getStudent($id)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['Hijos'] = DB::table('Familia_Alumnos as FA')
+    	                    ->select('FA.id','FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno', 'FA.Nivel_Alumno', 'FA.Fecha_Nacimiento')
+    	                    ->where('FA.id', '=', $id)
+    	                    ->get();
+            return Response::json($data); 
+        }
+    }
+    
+    //Actualiza los datos del estudiante
+	public function updateStudent2($id)
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			Input::flash();
+			
+	        $reglas = array(
+				'cedula' => 'required',
+				'nombre' => 'required',
+				'apellido1' => 'required',
+				'apellido2' => 'required',
+                'nacimiento' => 'required'
+	        );
+	       
+			// Crear instancia del validador.
+			$validador = Validator::make(Input::all(), $reglas);
+
+	        if ($validador->passes()) {
+	            $user = Familia::find($id);
+				$user->Cedula_Alumno = Input::get('cedula');
+				$user->Nombre_Alumno = Input::get('nombre');
+				$user->Apellido1_Alumno = Input::get('apellido1');
+				$user->Apellido2_Alumno = Input::get('apellido2');
+                $user->Fecha_Nacimiento = Input::get('nacimiento');
+				$user->save();
+        		return Response::json($user);  
+			}else{
+        		return Response::json(Familia::find($id));  
+			}
+		}
+	}
+
+	//Obtiene la información del alumno
+    public function getManager($id)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['Encargados'] = DB::table('Usuarios as U')
+    	                    ->select('U.id','U.Cedula', 'U.Nombre', 'U.Apellido1', 'U.Apellido2', 'U.Direccion')
+    	                    ->where('U.id', '=', $id)
+    	                    ->get();
+            $data['Usuarios_Correos'] = DB::table('Usuarios_Correos as UC')
+    	                    ->select('UC.id', 'UC.Correo')
+    	                    ->where('UC.Cedula', '=', $data['Encargados'][0]->Cedula)
+    	                    ->get();
+            $data['Usuarios_Telefonos'] = DB::table('Usuarios_Telefonos as UT')
+                        ->select('UT.id', 'UT.Telefono')
+                        ->where('UT.Cedula', '=', $data['Encargados'][0]->Cedula)
+                        ->get();
+            return Response::json($data); 
+        }
+    }
+
+    //Actualiza los datos personales del usuario
+	public function updateManager($id)
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			Input::flash();
+			
+	        $reglas = array(
+				'nombre' => 'required',
+				'apellido1' => 'required',
+				'apellido2' => 'required',
+				'direccion' => 'required'
+	        );
+	       
+			// Crear instancia del validador.
+			$validador = Validator::make(Input::all(), $reglas);
+
+	        if ($validador->passes()) {
+	            $user = User::find($id);
+				$user->Nombre = Input::get('nombre');
+				$user->Apellido1 = Input::get('apellido1');
+				$user->Apellido2 = Input::get('apellido2');
+				$user->Direccion = Input::get('direccion');
+	            $user->save();
+        		return Response::json($user); 
+			}else{
+        		return Response::json($user = User::find($id));  
+			}
+		}
+	}
+
+	//Actualiza los datos personales del usuario
+	public function updateManagerEmails($id)
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			Input::flash();
+			
+	        $reglas = array(
+				'correo' => 'required'
+	        );
+	       
+			// Crear instancia del validador.
+			$validador = Validator::make(Input::all(), $reglas);
+
+	        if ($validador->passes()) {
+	            $emailsUser = UsuariosCorreos::find($id);
+				$emailsUser->Correo = Input::get('correo');
+	            $emailsUser->save();
+        		return Response::json($emailsUser); 
+			}else{
+        		return Response::json($emailsUser = UsuariosCorreos::find($id));  
+			}
+		}
+	}
+
+	//Actualiza los datos personales del usuario
+	public function updateManagerPhones($id)
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			Input::flash();
+			
+	        $reglas = array(
+				'telefono' => 'required'
+	        );
+	       
+			// Crear instancia del validador.
+			$validador = Validator::make(Input::all(), $reglas);
+
+	        if ($validador->passes()) {
+	            $emailsUser = UsuariosTelefonos::find($id);
+				$emailsUser->Telefono = Input::get('telefono');
+	            $emailsUser->save();
+        		return Response::json($emailsUser); 
+			}else{
+        		return Response::json(UsuariosTelefonos::find($id));  
+			}
+		}
+	}
+    
+    //obtiene Datos de nuevo estudiante
+     public function getNewStudent($id)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['Prematriculado'] = DB::table('Nuevo_Ingreso as FA')
+    	                    ->select('FA.id','FA.Cedula_Alumno', 'FA.Nombre_Alumno', 'FA.Apellido1_Alumno', 'FA.Apellido2_Alumno', 'FA.Fecha_Nacimiento', 'FA.Nivel_Alumno')
+    	                    ->where('FA.id', '=', $id)
+    	                    ->get();
+            return Response::json($data); 
+        }
+    }
+    
+    //Actualiza los datos de nuevo estudiante
+	public function updateNewStudent($id)
+	{
+		if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+			Input::flash();
+			
+	        $reglas = array(
+				'cedula' => 'required',
+				'nombre' => 'required',
+				'apellido1' => 'required',
+				'apellido2' => 'required',
+                'nivel' => 'required',
+                'nacimiento' => 'required'
+	        );
+	       
+			// Crear instancia del validador.
+			$validador = Validator::make(Input::all(), $reglas);
+
+	        if ($validador->passes()) {
+	            $user = NuevoIngreso::find($id);
+				$user->Cedula_Alumno = Input::get('cedula');
+				$user->Nombre_Alumno = Input::get('nombre');
+				$user->Apellido1_Alumno = Input::get('apellido1');
+				$user->Apellido2_Alumno = Input::get('apellido2');
+                $user->Nivel_Alumno = Input::get('nivel');
+                $user->Fecha_Nacimiento = Input::get('nacimiento');
+				$user->save();
+        		return Response::json($user);  
+			}else{
+        		return Response::json(NuevoIngreso::find($id));  
+			}
+		}
+	}
+
+    //Obtiene los correos del usuarios
+    public function getEmails()
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['Emails'] = DB::table('Usuarios_Correos as UC')
+                            ->select('UC.Correo', 'UC.Cedula')
+                            ->where('U.Codigo_Familia', '=', Auth::user()->Codigo_Familia)
+                            ->join('Usuarios AS U','U.Cedula','=','UC.Cedula')
+                            ->get(); 
+            return Response::json($data);
+        }
+    }
+
+    //Obtiene los telefonos del usuarios
+    public function getPhones()
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data2['Phones'] = DB::table('Usuarios_Telefonos as UT')
+                            ->select('UT.Telefono', 'UT.Cedula')
+                            ->where('U.Codigo_Familia', '=', Auth::user()->Codigo_Familia)
+                            ->join('Usuarios AS U','U.Cedula','=','UT.Cedula')
+                            ->get(); 
+            return Response::json($data2);
+        }
+    }
+
+    //Obtiene los correos del usuarios
+    public function getEmailsID($Code)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['Emails'] = DB::table('Usuarios_Correos as UC')
+                            ->select('UC.Correo')
+                            ->where('UC.Cedula', '=', $Code)
+                            ->get(); 
+            return Response::json($data);
+        }
+    }
+
+    //Obtiene los telefonos del usuarios
+    public function getPhonesID($Code)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data2['Phones'] = DB::table('Usuarios_Telefonos as UT')
+                            ->select('UT.Telefono')
+                            ->where('UT.Cedula', '=', $Code)
+                            ->get(); 
+            return Response::json($data2);
+        }
+    }
+
+    public function confirm()
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $prematricula = new Prematricula();
+            $prematricula->Codigo_Familia = Auth::user()->Codigo_Familia;
+            $prematricula->Anio = date('Y') + 1;
+            $prematricula->Estado = 'T';
+            if ($prematricula->save()) {
+                return Redirect::route('/'); 
+            }else{
+                return $this->getAllFamily();
+            }
+        }
+    }
+
+
+    // Grettel Monge Rojas
+
+    //Muestra las citas de la familia
+    public function showAsignaciones(){
+        if ($this->validatePadre() == true) {
+            $data['Familia_Alumnos'] = DB::table('Familia_Alumnos as FA')
+                        ->select('FA.Cedula_Alumno',
+                                'FA.Nombre_Alumno',
+                                'FA.Apellido1_Alumno',
+                                'FA.Apellido2_Alumno',
+                                'FA.Seccion_Alumno')
+                        ->where('FA.Codigo_Familia', '=',   Auth::user()->Codigo_Familia )
+                        ->get(); 
+            $data['Permiso']  = $this->getRoles();
+            return View::make('padre.asignaciones', $data);
+        }else{
+            return Redirect::route('logoutFromRol'); //cierra sesion por falta de permisos 
+        }
+    }
+
+    public function getAsignaciones($cedula, $seccion, $materia)
+    {
+        if ($this->validatePadre() == false) {
+            return Redirect::route('home');
+        }else{
+            $data['totales'] = DB::select(
+                    DB::raw('SELECT
+                                distinct RE."Tipo_Trabajo",
+                                (SELECT 
+                                    count(E.id)
+                                FROM "Entregables" AS E 
+                                WHERE E."idRubroEntregable" = RE.id
+                                AND E.created_at > \''. date('Y') .'-01-01\'
+                                AND E."Materia" = \'' . $materia . '\'  
+                                AND E."Seccion" = \'' . $seccion . '\') AS totales,
+                                (SELECT 
+                                    count(ER.id)
+                                FROM "Entregables_Recibidos" AS ER ,"Entregables" AS E
+                                WHERE E."idRubroEntregable" = RE.id
+                                AND ER."idEntregable" = E.id
+                                AND E.created_at > \''. date('Y') .'-01-01\' 
+                                AND E."Materia" = \'' . $materia . '\'  
+                                AND E."Seccion" = \'' . $seccion . '\'
+                                AND ER."Cedula_Alumno" = \'' . $cedula . '\') AS entregados,
+                                (SELECT 
+                                    count(E.id)
+                                FROM "Entregables" AS E
+                                WHERE E."idRubroEntregable" = RE.id
+                                AND NOT EXISTS (Select  * from "Entregables_Recibidos" as ER Where ER."idEntregable" = E.id and ER."Cedula_Alumno" = \'' . $cedula . '\')
+                                AND E.created_at > \''. date('Y') .'-01-01\' 
+                                AND E."Materia" = \'' . $materia . '\'  
+                                AND E."Seccion" = \'' . $seccion . '\'
+                                AND E."Estado" = \'T\') AS sinPresentar,
+                                (SELECT 
+                                    count(E.id)
+                                FROM "Entregables" AS E 
+                                WHERE E."idRubroEntregable" = RE.id
+                                AND E.created_at > \''. date('Y') .'-01-01\' 
+                                AND E."Materia" = \'' . $materia . '\'  
+                                AND E."Seccion" = \'' . $seccion . '\'
+                                AND E."Estado" = \'F\') AS pendientes
+                            FROM "Rubros_Entregables"  AS RE, "Entregables" AS E 
+                            WHERE (SELECT 
+                                    count(E.id)
+                                FROM "Entregables" AS E 
+                                WHERE E."idRubroEntregable" = RE.id
+                                AND E.created_at > \''. date('Y') .'-01-01\'
+                                AND E."Materia" = \'' . $materia . '\'  
+                                AND E."Seccion" = \'' . $seccion . '\') > 0
+                            GROUP BY RE."Tipo_Trabajo", RE.id, E."idRubroEntregable",E.id
+                            ORDER BY RE."Tipo_Trabajo" ASC'));
+
+            return Response::json($data);
+        }
+    }
 }

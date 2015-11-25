@@ -23,7 +23,7 @@
 </head>
 
 <body>
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -70,6 +70,12 @@
                           <li><a href="{{ route('AdminCitas') }}"><span class="glyphicon glyphicon-calendar"></span>&nbsp; Citas de Atención</a></li>
                           <li class="divider"></li>
                           <li><a href="{{ route('AdminAtencion') }}"><span class="glyphicon glyphicon-time"></span>&nbsp; Horas de Atención</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('AdminRubros') }}"><span class="glyphicon glyphicon-sound-5-1"></span>&nbsp; Rubros de Evaluación</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('getAdminRubros') }}"><span class="glyphicon glyphicon-save"></span>&nbsp; Rubríca General</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('AdminPrematricula') }}"><span class="glyphicon glyphicon-check"></span>&nbsp; Prematrícula</a></li>
                         </ul>
                       </li>
                     </ul>
@@ -80,6 +86,12 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-book"></span>&nbsp; Profesor <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                           <li><a href="{{ route('principalProfe') }}"><span class="glyphicon glyphicon-time"></span>&nbsp; Consulta de Citas</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('asistenciaProfe') }}"><span class="glyphicon glyphicon-indent-left"></span>&nbsp; Control de Asistencia</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('asignacionesProfe') }}"><span class="glyphicon glyphicon-inbox"></span>&nbsp; Control de Asignaciones</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('getRubros') }}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp; Control de Rúbrica</a></li>
                         </ul>
                       </li>
                     </ul>
@@ -110,6 +122,10 @@
                           <li><a href="{{ route('certificados') }}"><span class="glyphicon glyphicon-folder-close"></span>&nbsp; Solicitud de Certificaciones</a></li>
                           <li class="divider"></li>
                           <li><a href="{{ route('cancelaCitas') }}"><span class="glyphicon glyphicon-remove-circle"></span>&nbsp; Cancelar Citas</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('asignacionesPadre') }}"><span class="glyphicon glyphicon-inbox"></span>&nbsp; Asignaciones</a></li>
+                          <li class="divider"></li>
+                          <li><a href="{{ route('prematricula') }}"><span class="glyphicon glyphicon-check"></span>&nbsp; Prematrícula</a></li>
                         </ul>
                       </li>
                     </ul>
@@ -123,7 +139,7 @@
   </div><!-- /.container-fluid -->
 </nav>
 </body>
-    <div class="container">
+    <div class="container" style="margin-top: 5%;">
         <!-- Sección de mensages de alerta -->
         {{ View::make('partials.messages') }} @section('cuerpo')
         <!-- Sección del Body -->
@@ -135,9 +151,12 @@
             <div>
                 <hr>
                 <center> COPES - {{date('Y')}} ©</center>
+                <hr>
             </div>
         </div>
     </footer>
+    
+
     {{HTML::script('js/index.js');}} {{HTML::script('js/base/main.js')}}
     {{HTML::script('js/docsupport/chosen.jquery.js');}}
     {{HTML::script('js/docsupport/chosen.js');}}

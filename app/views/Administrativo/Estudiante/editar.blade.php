@@ -60,7 +60,29 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
+                        {{-- Fecha ------------------------}} {{ Form::label('fecha', 'Fecha de Nacimiento', array('class' => 'control-label')) }}
+                        <div class="form-group input-group" style="padding-right: 15px;">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-euro"></span></span>
+                            <input name="fecha" class="form-control" type="date" value="{{$fam->Fecha_Nacimiento}}">
+                        </div>
+                        <p class="text-danger">
+                            {{ $errors->newFamily->first('fecha') }}
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        {{-- Mensual ------------------------}} {{ Form::label('mensual', 'Monto Mensual', array('class' => 'control-label')) }}
+                        <div class="form-group input-group">
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-euro"></span></span>
+                            <input name="mensual" class="form-control" type="text" value="{{$fam->Monto_Mensual}}">
+                        </div>
+                        <p class="text-danger">
+                            {{ $errors->newFamily->first('mensual') }}
+                        </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
                         {{-- Seccion ------------------------}} {{ Form::label('seccion', 'Sección', array('class' => 'control-label')) }}
                         <div class="form-group input-group" style="padding-right: 15px;">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-sound-7-1"></span></span>
@@ -70,7 +92,7 @@
                             {{ $errors->newFamily->first('seccion') }}
                         </p>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         {{-- Nivel ------------------------}} {{ Form::label('nivel', 'Nivel', array('class' => 'control-label')) }}
                         <div class="form-group input-group" style="padding-right: 15px;">
                             <span class="input-group-addon"><span class="glyphicon glyphicon-signal"></span></span>
@@ -78,16 +100,6 @@
                         </div>
                         <p class="text-danger">
                             {{ $errors->newFamily->first('nivel') }}
-                        </p>
-                    </div>
-                    <div class="col-md-4">
-                        {{-- Mensual ------------------------}} {{ Form::label('mensual', 'Monto Mensual', array('class' => 'control-label')) }}
-                        <div class="form-group input-group">
-                            <span class="input-group-addon"><span class="glyphicon glyphicon-euro"></span></span>
-                            <input name="mensual" class="form-control" type="text" value="{{$fam->Monto_Mensual}}">
-                        </div>
-                        <p class="text-danger">
-                            {{ $errors->newFamily->first('mensual') }}
                         </p>
                     </div>
                 </div>
