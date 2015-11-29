@@ -1483,13 +1483,13 @@ class AdministradorController extends BaseController
         }
 	}
 
-	public function newType()
+	public function newType($id)
     {
         if ($this->validateAdministrador() == false) {
             return Redirect::route('home');
         }else{
             $rubro = new Rubros();
-            $rubro->Detalle_Rubro = Input::get('rubro');
+            $rubro->Detalle_Rubro = $id;
             if ($rubro->save()) {
                 return Response::json($rubro);
             }else{

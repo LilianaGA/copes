@@ -76,7 +76,7 @@
     Route::get('Administrativo/searchItems/{nivel}/{materia}', 'AdministradorController@searchItems')->before('auth')->before('auth');
     Route::post('createNewItem', array('as' => 'createNewItem','uses' => 'AdministradorController@createNewItem'))->before('auth');
     Route::put('Administrativo/updateItem/{id}', 'AdministradorController@updateItem')->before('auth'); 
-    Route::post('Administrativo/newType', 'AdministradorController@newType')->before('auth');
+    Route::get('Administrativo/newType/{id}', 'AdministradorController@newType')->before('auth');
     Route::get('Administrativo/getRubros', array('as' => 'getAdminRubros','uses' => 'AdministradorController@getRubros'))->before('auth'); 
     Route::get('Administrativo/searchRubros/{seccion}/{materia}/{periodo}/{anio}', 'AdministradorController@searchRubros')->before('auth');
     // Grettel Monge Rojas

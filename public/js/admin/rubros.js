@@ -52,8 +52,8 @@ function getMaterias () {
 	        }
 	    	var allContainer = document.getElementById("allContainer");
 	    	allContainer.style.display = "";
+            fountainG.style.display = "none";
 	  	});
-        fountainG.style.display = "none";
     }else{
     	alert("Debe seleccionar un nivel");
         fountainG.style.display = "none";
@@ -207,8 +207,7 @@ function saveNew(){
     var rubro = $('#txt_rubrica').val();
     if (rubro != "") {
         $.ajax({
-            url:'/Administrativo/newType/',
-            type: "POST",
+            url:'/Administrativo/newType/'+rubro,
             data : {
                 rubro:rubro
             }
