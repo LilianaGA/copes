@@ -139,7 +139,7 @@
     Route::get('profesor/deleteItem/{id}', 'ProfesorController@deleteItem')->before('auth');
     Route::get('profesor/searchItem/{id}', 'ProfesorController@searchItem')->before('auth');
     Route::post('profesor/updateItem/{id}', 'ProfesorController@updateItem')->before('auth');
-    Route::post('profesor/newType', 'ProfesorController@newType')->before('auth');
+    Route::get('profesor/newType/{id}', 'ProfesorController@newType')->before('auth');
     Route::get('profesor/getItem/{seccion}/{materia}', 'ProfesorController@getItem')->before('auth');
     Route::get('profesor/saveItemStudent/{arr}/{id}', 'ProfesorController@saveItemStudent')->before('auth');
     Route::get('profesor/getRubros', array('as' => 'getRubros','uses' => 'ProfesorController@getRubros'))->before('auth'); 

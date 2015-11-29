@@ -397,13 +397,13 @@ class ProfesorController extends BaseController
         }
     }
 
-    public function newType()
+    public function newType($id)
     {
         if ($this->validateProfesor() == false) {
             return Redirect::route('home');
         }else{
             $entregable = new RubrosEntregables();
-            $entregable->Tipo_Trabajo = Input::get('trabajo');
+            $entregable->Tipo_Trabajo = $id;
             if ($entregable->save()) {
                 return Response::json($entregable);
             }else{
