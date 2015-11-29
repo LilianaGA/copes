@@ -65,7 +65,7 @@
                 <div class="col-md-6">
                     <div class="panel widget">
                         <div class="panel-heading widget-head">
-                            <h3 class="heading"><i class="glyphicon glyphicon-bookmark"></i> Desglose de Materias</h3>
+                            <h3 class="heading"><i class="glyphicon glyphicon-bookmark"></i> Desglose de Secciones</h3>
                         </div>
                         <div class="panel-body">
                             <table class="table" id="Secciones">
@@ -82,7 +82,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-3">
-                                    <label>Seleccione un Nivel: </label>
+                                    <label>Seleccione una Materia: </label>
                                 </div>
                                 <div class="col-md-6">
                                     <select type="text" id="select-subject" class="form-control multiselect multiselect-icon" role="multiselect">          
