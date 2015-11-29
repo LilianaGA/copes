@@ -230,8 +230,7 @@ function saveNewType () {
     var trabajo = $('#txt_asignatura').val();
     if (trabajo != "") {
     	$.ajax({
-	        url:'/profesor/newType/',
-	        type: "POST",
+	        url:'/profesor/newType/'+trabajo,
 	        data : {
 	        	trabajo:trabajo
 	        }

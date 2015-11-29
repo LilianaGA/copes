@@ -388,7 +388,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="ui-group-buttons">
-                                <a class="btn btn-success" onclick="saveNewType()" role="button" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span>&nbsp; Confirmar</a>
+                                <a class="btn btn-success" onclick="saveNewType()" role="button" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span>&nbsp; Guardar</a>
                                 <a class="btn btn-primary" id="btnCancela" role="button"  data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>&nbsp; Cancelar</a>
                             </div>
                         </div>
